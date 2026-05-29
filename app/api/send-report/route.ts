@@ -1,15 +1,16 @@
 import { Resend } from 'resend'
 import { render } from '@react-email/render'
 import VisitReportEmail from '../../../emails/visit-report'
-import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Helper to build Supabase public Storage URLs without instantiating a client.
+// This avoids top-level module evaluation that fails during `next build`
+// when environment variables are not yet present in the build context.
+function getSupabasePublicUrl(bucket: string, path: string): string {
+  const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  // Supabase public URL pattern: {project}/storage/v1/object/public/{bucket}/{path}
+  return `${baseUrl}/storage/v1/object/public/${bucket}/${encodeURIComponent(path)}`
+}
 
 export async function POST(request: Request) {
   try {
@@ -29,16 +30,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
+    // Lazily create Resend only when actually sending (safe if key missing at build time)
+    const resend = new Resend(process.env.RESEND_API_KEY)
+
     // Use public URLs (recommended for email compatibility)
     // Make sure the 'visit-photos' bucket is set to Public in Supabase Storage
     let emailPhotoUrls: string[] = []
     if (photoUrls && photoUrls.length > 0) {
-      emailPhotoUrls = photoUrls.map((path: string) => {
-        const { data } = supabase.storage
-          .from('visit-photos')
-          .getPublicUrl(path)
-        return data.publicUrl
-      })
+      emailPhotoUrls = photoUrls.map((path: string) => getSupabasePublicUrl('visit-photos', path))
     }
 
     // Render the beautiful React Email template

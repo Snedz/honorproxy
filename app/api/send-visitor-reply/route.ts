@@ -3,8 +3,6 @@ import { render } from '@react-email/render'
 import VisitorRepliedToThankYouEmail from '../../../emails/visitor-replied-to-thank-you'
 import { NextResponse } from 'next/server'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -21,6 +19,9 @@ export async function POST(request: Request) {
     if (!toEmail || !originalThankYou || !visitorReply || !deceasedName) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
+
+    // Lazily create Resend only when actually sending
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     const html = await render(
       VisitorRepliedToThankYouEmail({
