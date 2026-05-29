@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f6f1;
+  --foreground: #1f2429;
+  
+  /* HonorProxy — calm, reverent palette */
+  --honor-navy: #1c252f;
+  --honor-slate: #2f3a46;
+  --honor-stone: #5c656f;
+  --honor-warm: #f5f2eb;
+  --honor-cream: #f9f7f2;
+  --honor-border: #d8d2c6;
+  --honor-sage: #4a5c4f;
+  --honor-gold: #8a7754;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: #f8f6f1; /* warm honor cream */
+  color: #1f2429;
+  font-family: var(--font-geist-sans);
+}
+
+/* Ensure the warm restrained background wins over any old cool grays */
+html {
+  background: #f8f6f1;
+}
+
+/* Dignified, restrained base for a remembrance platform */
+a {
+  transition: color 0.1s ease;
+}
+
+a:hover {
+  color: var(--honor-navy);
+}
+
+/* Reverent, elevated components */
+.honor-card {
+  background: #fff;
+  border: 1px solid var(--honor-border);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.035);
+}
+
+.honor-quote {
+  font-family: Georgia, "Iowan Old Style", ui-serif, serif;
+  font-style: italic;
+  line-height: 1.55;
+  color: #2a3138;
+}
+
+.honor-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--honor-stone);
+  font-weight: 500;
+}
+
+.honor-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--honor-border), transparent);
+}
+
+.honor-section {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.honor-photo {
+  border-radius: 12px;
+  border: 1px solid var(--honor-border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.honor-photo:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Form refinements */
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+  background: #fff;
+  border-color: var(--honor-border);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--honor-slate);
+  box-shadow: 0 0 0 3px rgba(28, 37, 47, 0.06);
+  outline: none;
+}
+
+/* Success / keepsake states — calm and warm */
+.honor-success {
+  background: #f0ede4;
+  border-color: #d4c9ad;
+}
+
+.honor-success-text {
+  color: #2f3a2f;
+}
+
+/* ============================================================
+   Reverent Print Styles — for keepsakes & reports
+   Optimized for beautiful "Save as PDF" output
+   ============================================================ */
+@media print {
+  @page {
+    margin: 0.6in 0.7in;
+    size: letter;
+  }
+
+  body {
+    background: white !important;
+    color: #111;
+    font-size: 12.5pt;
+    line-height: 1.5;
+  }
+
+  .honor-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 1.25rem !important;
+  }
+
+  .honor-quote {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: #222;
+    border-left: 2px solid #888;
+    padding-left: 1rem;
+  }
+
+  .honor-label {
+    color: #555;
+    letter-spacing: 1.2px;
+  }
+
+  .honor-photo {
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  /* Keep the quiet footer visible and clean */
+  .honor-card > div:last-child {
+    border-top-color: #ccc !important;
+    color: #666 !important;
+  }
+
+  /* Prevent awkward breaks in the main content blocks */
+  .space-y-8 > * {
+    page-break-inside: avoid;
+  }
+
+  /* Make the title and name stand out nicely on paper */
+  h1 {
+    font-size: 20pt !important;
+    letter-spacing: -0.5px;
+  }
+
+  /* Subtle but dignified rule under sections */
+  .pt-4.border-t {
+    border-top-color: #bbb !important;
+  }
+
+  /* Thank-you block prints cleanly without the warm tint */
+  .bg-\[\#f5e8c7\] {
+    background: #f8f4eb !important;
+    border: 1px solid #d8d0b8 !important;
+  }
+}
