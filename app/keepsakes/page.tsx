@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+// Pure helper for public Storage URLs (no client needed, safe during prerender)
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 interface CompletedVisit {
   id: string
   created_at: string
@@ -29,24 +35,29 @@ export default function MyKeepsakesPage() {
   const [reports, setReports] = useState<Record<string, Report>>({})
   const [loading, setLoading] = useState(true)
 
-  const supabase = createClient()
+  // No top-level createClient() — it is only called inside effects/handlers after mount.
+  // This allows the page to be statically prerendered without env vars at build time.
 
   useEffect(() => {
     async function init() {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
 
       if (user) {
-        await loadKeepsakes(user.id)
+        await loadKeepsakes(user.id, supabase)
       }
       setLoading(false)
     }
     init()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function loadKeepsakes(userId: string) {
+  async function loadKeepsakes(userId: string, supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+
     // Load completed visits
-    const { data: visitsData } = await supabase
+    const { data: visitsData } = await client
       .from('visits')
       .select(`
         id,
@@ -70,7 +81,7 @@ export default function MyKeepsakesPage() {
     // Load reports for these visits
     const visitIds = visitsData.map((v: any) => v.id)
     if (visitIds.length > 0) {
-      const { data: reportsData } = await supabase
+      const { data: reportsData } = await client
         .from('visit_reports')
         .select(`
           id,
@@ -200,11 +211,11 @@ export default function MyKeepsakesPage() {
                     {report.photo_urls && report.photo_urls.length > 0 && (
                       <div className="flex gap-3">
                         {report.photo_urls.slice(0, 3).map((path, idx) => {
-                          const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
+                          const publicUrl = getPublicUrl(path)
                           return (
                             <a key={idx} href={`/visit/keepsake/${visit.id}`} className="block">
                               <img 
-                                src={data.publicUrl} 
+                                src={publicUrl} 
                                 alt="" 
                                 className="w-20 h-20 object-cover honor-photo rounded-lg" 
                               />

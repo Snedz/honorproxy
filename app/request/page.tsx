@@ -11,9 +11,10 @@ export default function RequestPage() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const supabase = createClient()
+  // Supabase client created only after mount (safe for static prerender of this page)
 
   useEffect(() => {
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       setLoading(false)
@@ -24,7 +25,7 @@ export default function RequestPage() {
     })
 
     return () => subscription.unsubscribe()
-  }, [supabase])
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -37,8 +38,9 @@ export default function RequestPage() {
     const formData = new FormData(form)
 
     const cemeterySlug = formData.get('cemetery') as string
+    const client = createClient()
 
-    const { data: cemeteries, error: cemError } = await supabase
+    const { data: cemeteries, error: cemError } = await client
       .from('cemeteries')
       .select('id, slug, name')
       .in('slug', ['arlington', 'fort-snelling', 'golden-gate', 'quantico'])
@@ -65,10 +67,11 @@ export default function RequestPage() {
       return
     }
 
+    // Reuse the client created above for the cemeteries query
     // Get the current user's email so we can store it directly on the request
-    const { data: { user: authUser } } = await supabase.auth.getUser()
+    const { data: { user: authUser } } = await client.auth.getUser()
 
-    const { error: insertError } = await (supabase.from('grave_requests') as any)
+    const { error: insertError } = await (client.from('grave_requests') as any)
       .insert({
         requester_id: user.id,
         requester_email: authUser?.email || null,

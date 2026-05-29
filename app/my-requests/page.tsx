@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+// Pure helper for public Storage URLs (safe during static prerender)
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 interface VisitReport {
   id: string
   visit_id: string
@@ -35,21 +41,26 @@ export default function MyRequestsPage() {
   const [user, setUser] = useState<User | null>(null)
   const [requests, setRequests] = useState<Request[]>([])
   const [loading, setLoading] = useState(true)
-  const supabase = createClient()
+
+  // No top-level createClient() — created only inside effects/handlers after mount.
+  // This page can now be statically prerendered safely.
 
   useEffect(() => {
+    const supabase = createClient()
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       if (user) {
-        loadRequests(user.id)
+        loadRequests(user.id, supabase)
       } else {
         setLoading(false)
       }
     })
-  }, [supabase])
+  }, [])
 
-  async function loadRequests(userId: string) {
-    const { data, error } = await supabase
+  async function loadRequests(userId: string, supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+
+    const { data, error } = await client
       .from('grave_requests')
       .select(`
         id,
@@ -77,15 +88,11 @@ export default function MyRequestsPage() {
       return
     }
 
-    // Generate signed URLs for photos (since bucket is private)
-    // Since the visit-photos bucket is public, we can use direct public URLs
+    // Generate public URLs for photos (bucket is public)
     const requestsWithPhotos = data.map((req: any) => {
       if (req.visit_reports && req.visit_reports.length > 0) {
         const reportsWithPhotos = req.visit_reports.map((report: any) => {
-          const publicUrls = (report.photo_urls || []).map((path: string) => {
-            const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
-            return data.publicUrl
-          })
+          const publicUrls = (report.photo_urls || []).map((path: string) => getPublicUrl(path))
           return { ...report, publicPhotoUrls: publicUrls }
         })
         return { ...req, visit_reports: reportsWithPhotos }
@@ -251,8 +258,9 @@ export default function MyRequestsPage() {
                             onKeyDown={async (e) => {
                               if (e.key === 'Enter' && e.currentTarget.value.trim()) {
                                 const message = e.currentTarget.value.trim()
+                                const client = createClient()
 
-                                const { error } = await (supabase
+                                const { error } = await (client
                                   .from('visit_reports') as any)
                                   .update({
                                     thank_you_message: message,
@@ -266,7 +274,7 @@ export default function MyRequestsPage() {
                                 }
 
                                 try {
-                                  const { data: visitData } = await supabase
+                                  const { data: visitData } = await client
                                     .from('visits')
                                     .select(`
                                       visitor_id,

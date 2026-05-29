@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+// Safe pure helper (no client instantiation at module or render time)
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 interface PendingReport {
   id: string
   visit_id: string
@@ -35,17 +41,18 @@ export default function ReviewQueuePage() {
   // Local moderator notes per report (captured for this review session)
   const [moderatorNotes, setModeratorNotes] = useState<Record<string, string>>({})
 
-  const supabase = createClient()
+  // Client created only after mount inside effects/handlers. Safe for static prerender.
 
   useEffect(() => {
     async function init() {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
 
       if (user) {
         await Promise.all([
-          loadPendingReports(),
-          loadRejectedCount(),
+          loadPendingReports(supabase),
+          loadRejectedCount(supabase),
         ])
       }
       setLoading(false)
@@ -53,8 +60,9 @@ export default function ReviewQueuePage() {
     init()
   }, [])
 
-  async function loadPendingReports() {
-    const { data } = await supabase
+  async function loadPendingReports(supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+    const { data } = await client
       .from('visit_reports')
       .select(`
         id,
@@ -81,8 +89,9 @@ export default function ReviewQueuePage() {
     }
   }
 
-  async function loadRejectedReports() {
-    const { data } = await supabase
+  async function loadRejectedReports(supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+    const { data } = await client
       .from('visit_reports')
       .select(`
         id,
@@ -111,8 +120,9 @@ export default function ReviewQueuePage() {
     }
   }
 
-  async function loadRejectedCount() {
-    const { count } = await supabase
+  async function loadRejectedCount(supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+    const { count } = await client
       .from('visit_reports')
       .select('*', { count: 'exact', head: true })
       .not('rejected_at', 'is', null)
@@ -126,12 +136,13 @@ export default function ReviewQueuePage() {
 
   async function approveReport(report: PendingReport) {
     setProcessingId(report.id)
+    const client = createClient()
 
     try {
       const note = moderatorNotes[report.id] || ''
 
       // Mark approved + record moderator + optional free-text note for our records
-      const { error: updateError } = await (supabase.from('visit_reports') as any)
+      const { error: updateError } = await (client.from('visit_reports') as any)
         .update({
           is_approved: true,
           moderated_by: user?.id || null,
@@ -144,10 +155,7 @@ export default function ReviewQueuePage() {
 
       // Send the report email to the family
       if (report.grave_requests?.requester_email) {
-        const photoUrls = (report.photo_urls || []).map((path: string) => {
-          const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
-          return data.publicUrl
-        })
+        const photoUrls = (report.photo_urls || []).map((path: string) => getPublicUrl(path))
 
         await fetch('/api/send-report', {
           method: 'POST',
@@ -188,9 +196,10 @@ export default function ReviewQueuePage() {
     setProcessingId(reportId)
 
     try {
+      const client = createClient()
       // Soft reject: keep the report for the record but mark it rejected so it no longer appears in the active queue.
       // This preserves moderator notes and creates a clean audit trail.
-      const { error } = await (supabase.from('visit_reports') as any)
+      const { error } = await (client.from('visit_reports') as any)
         .update({
           rejected_at: new Date().toISOString(),
           moderated_by: user?.id || null,
@@ -218,7 +227,8 @@ export default function ReviewQueuePage() {
     setProcessingId(reportId)
 
     try {
-      const { error } = await (supabase.from('visit_reports') as any)
+      const client = createClient()
+      const { error } = await (client.from('visit_reports') as any)
         .update({
           rejected_at: null,
           // Keep the previous moderated_by/at and notes for the historical record
@@ -378,11 +388,11 @@ export default function ReviewQueuePage() {
                     <div className="text-[10px] tracking-[1.5px] text-[#5c656f] mb-2">PHOTOS FROM THE VISIT</div>
                     <div className="flex flex-wrap gap-3">
                       {report.photo_urls.map((path, idx) => {
-                        const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
+                        const url = getPublicUrl(path)
                         return (
-                          <a href={data.publicUrl} target="_blank" rel="noopener noreferrer" key={idx}>
+                          <a href={url} target="_blank" rel="noopener noreferrer" key={idx}>
                             <img 
-                              src={data.publicUrl} 
+                              src={url} 
                               alt="" 
                               className="w-24 h-24 object-cover honor-photo rounded border border-[#e2d9c9] hover:border-[#c9b48a] transition" 
                             />
