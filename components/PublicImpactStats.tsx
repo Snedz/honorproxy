@@ -5,10 +5,13 @@ import { createClient } from '@/lib/supabase/client'
 
 export default function PublicImpactStats() {
   const [stats, setStats] = useState<{ visits: number; cemeteries: number } | null>(null)
-  const supabase = createClient()
 
   useEffect(() => {
     async function fetchStats() {
+      // Create client inside the effect so it only runs in the browser after mount.
+      // Prevents build/prerender crashes on statically generated pages (homepage, remembrances).
+      const supabase = createClient()
+
       // Count public visits
       const { count: totalVisits } = await supabase
         .from('visit_reports')

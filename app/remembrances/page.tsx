@@ -25,7 +25,9 @@ export default function RemembrancesPage() {
   const [totalPublished, setTotalPublished] = useState(0)
   const PAGE_SIZE = 8
 
-  const supabase = createClient()
+  // Note: we no longer create the Supabase client at render time.
+  // It is created inside the async data-loading functions below so that
+  // this page can be statically prerendered without requiring env vars at build time.
 
   // Derived list of cemeteries present in the loaded public remembrances (grows as more are loaded)
   const availableCemeteries = Array.from(
@@ -51,6 +53,7 @@ export default function RemembrancesPage() {
     : remembrances
 
   async function loadTotalPublished() {
+    const supabase = createClient()
     const { count } = await supabase
       .from('visit_reports')
       .select('*', { count: 'exact', head: true })
@@ -61,6 +64,7 @@ export default function RemembrancesPage() {
 
   useEffect(() => {
     async function loadRecent() {
+      const supabase = createClient()
       const { data } = await supabase
         .from('visit_reports')
         .select(`
@@ -100,6 +104,7 @@ export default function RemembrancesPage() {
     setLoadingMore(true)
     const offset = remembrances.length
 
+    const supabase = createClient()
     const { data } = await supabase
       .from('visit_reports')
       .select(`

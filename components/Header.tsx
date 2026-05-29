@@ -7,9 +7,13 @@ import type { User } from '@supabase/supabase-js'
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
-  const supabase = createClient()
 
   useEffect(() => {
+    // Create the Supabase browser client only in the browser, after mount.
+    // This prevents crashes during static prerendering (e.g. /_not-found, homepage)
+    // when NEXT_PUBLIC_SUPABASE_* env vars are not yet available in the build context.
+    const supabase = createClient()
+
     // Get initial user
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
@@ -26,9 +30,11 @@ export default function Header() {
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [])
 
   async function handleSignOut() {
+    // Create client locally when the action is actually triggered (client-side only)
+    const supabase = createClient()
     await supabase.auth.signOut()
     // Refresh to clear any server-side state if needed
     window.location.href = '/'
