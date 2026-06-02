@@ -22,10 +22,12 @@ export default function SignupPage() {
     // Create client only when the user actually submits (client-side only)
     const supabase = createClient()
 
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://honorproxy.com'
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        emailRedirectTo: `${origin}/auth/callback`,
         data: {
           full_name: fullName,
         },
@@ -39,7 +41,7 @@ export default function SignupPage() {
       }
       setError(displayError)
     } else {
-      setMessage("Account created. Please check your email to confirm your account, then sign in.")
+      setMessage("Account created. Please check your email (and spam/promotions folder) for the confirmation link. Click it to finish setting up your account, then sign in.")
     }
 
     setLoading(false)

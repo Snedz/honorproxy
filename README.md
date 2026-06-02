@@ -81,6 +81,8 @@ This small detail makes a real difference in how seriously families receive the 
 
 **Important**: Do not use the testing address (`onboarding@resend.dev`) for real family deliveries once you are live.
 
+> **Note on signup emails**: Resend powers only the visit reports and thank-you messages. Supabase Auth handles "confirm your account" emails separately. See `SUPABASE_SETUP.md` → Section 9 ("Auth Email Confirmations & Delivery") for the exact dashboard steps (SMTP using your existing Resend key + redirect URLs + manual confirm for testing). This fixes the "Account created... but not email" state.
+
 ## Deployment
 
 HonorProxy is designed to deploy easily on Vercel.
@@ -102,7 +104,9 @@ Manual alternative (if you prefer or for initial setup):
 
 The application already uses strict Row Level Security policies. There is no separate “admin” surface — the review queue is simply a protected page available to anyone with a verified account who has been granted access.
 
-For production email, verify a custom domain in Resend and use a respectful sending address such as `visits@yourdomain.com`. See the Email Setup section above for details.
+For production email (visit reports), verify a custom domain in Resend and use a respectful sending address such as `visits@yourdomain.com`. See the "Email Setup (Resend)" section above.
+
+For account signup confirmation emails, see `SUPABASE_SETUP.md` Section 9.
 
 ## Project Structure
 
