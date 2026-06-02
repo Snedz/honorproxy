@@ -283,6 +283,31 @@ export default function KeepsakeViewer() {
           <p className="mt-1 text-[10px] text-[#9ca3af]">
             Choose “Save as PDF” in the print dialog for best results.
           </p>
+
+          {/* Social sharing buttons for promotion */}
+          <div className="mt-6 pt-4 border-t border-[#d8d2c6]">
+            <div className="text-[10px] tracking-widest text-[#7a838e] mb-2">HELP OTHERS FIND HONORPROXY</div>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => {
+                  const shareText = `A real person stood at the grave of ${deceasedName} at ${cemeteryName} through HonorProxy and left this remembrance:\n\n"${report.reflection_text}"\n\nIf you have a loved one at a national cemetery and cannot visit, HonorProxy can help: honorproxy.com\n\n#HonorProxy #Remembrance #Veterans #MilitaryFamilies`
+                  window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank')
+                }}
+                className="text-xs rounded-full border border-[#d8d2c6] px-3 py-1 hover:bg-[#f9f7f2]"
+              >
+                Post on X
+              </button>
+              <button
+                onClick={() => {
+                  const shareText = `A real person stood at the grave of ${deceasedName} at ${cemeteryName} through HonorProxy and left this remembrance:\n\n"${report.reflection_text}"\n\nIf you have a loved one at a national cemetery and cannot visit, HonorProxy can help: honorproxy.com\n\n#HonorProxy #Remembrance #Veterans #MilitaryFamilies`
+                  navigator.clipboard.writeText(shareText).then(() => alert('Copied for Facebook, Instagram, LinkedIn etc.'))
+                }}
+                className="text-xs rounded-full border border-[#d8d2c6] px-3 py-1 hover:bg-[#f9f7f2]"
+              >
+                Copy for social
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

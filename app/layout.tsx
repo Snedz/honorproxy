@@ -20,6 +20,19 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://honorproxy.com'),
+  openGraph: {
+    title: "HonorProxy",
+    description: "Someone will stand at their grave for you. A real person visits on your behalf and brings back photos and a personal reflection.",
+    images: [{ url: '/og-banner.jpg' }],
+    siteName: "HonorProxy",
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "HonorProxy",
+    description: "Someone will stand at their grave for you. Respectful proxy visits to national cemeteries for those who cannot be there.",
+    images: ['/og-banner.jpg'],
+  },
 };
 
 export default function RootLayout({

@@ -128,6 +128,25 @@ honorproxy/
 - Designed for 501(c)(3) nonprofit path from the beginning.
 - Architecture must support global scale and eventual off-world use.
 
+## Spreading the Word (Social Media & Discovery)
+To help families and visitors find HonorProxy:
+
+- **Optimized sharing**: Keepsake pages and post-visit success states include "Share on X" (opens twitter.com/intent with pre-filled respectful text) + "Copy for social" for Facebook, Instagram, LinkedIn.
+- **Public Remembrances**: Each card has quick X/Copy buttons.
+- **Metadata**: Full Open Graph + Twitter cards on site + per-keepsake (with photo or fallback banner). Good link previews when shared.
+- **Assets**: Custom OG banner images in /public (og-banner.jpg for site, og-keepsake.jpg fallback).
+- **Footer**: Links to X/FB/IG + #HonorProxy encouragement.
+- **Suggested tactics**:
+  - Post on X (original discovery channel for this concept via veteran/military accounts).
+  - Share in Gold Star family Facebook groups, veteran Reddit, LinkedIn military networks.
+  - Use the generated share text (update names/cemeteries) — keep tone reverent.
+  - Encourage visitors after a report: "Share your remembrance to help others".
+  - Partner mentions: reach out to existing orgs (e.g. Travis Manion, TAPS, American Legion).
+  - Hashtags: #HonorProxy #Remembrance #Veterans #ArlingtonNationalCemetery etc.
+- Update actual social handles in Footer when accounts are live (@honorproxy on X recommended).
+
+Run `npm run dev` and test sharing a keepsake to see the preview cards.
+
 ## Current Status & Next Steps
 
 The core emotional experience is complete and has received significant polish:

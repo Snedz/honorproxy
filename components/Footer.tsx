@@ -17,6 +17,18 @@ export default function Footer() {
           <span className="text-[#d8d2c6]">·</span>
           <a href="/privacy" className="underline hover:text-[#1c252f]">Privacy</a>
         </div>
+
+        {/* Social media for discovery */}
+        <div className="mt-4 text-[10px] text-[#6b7582]">
+          Follow &amp; share on{' '}
+          <a href="https://x.com/honorproxy" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#1c252f]">X</a>
+          {' · '}
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#1c252f]">Facebook</a>
+          {' · '}
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#1c252f]">Instagram</a>
+          <span className="text-[#d8d2c6] mx-1">·</span>
+          Use #HonorProxy to spread the word
+        </div>
       </div>
     </footer>
   );

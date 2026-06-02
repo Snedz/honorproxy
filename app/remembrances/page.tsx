@@ -235,30 +235,55 @@ export default function RemembrancesPage() {
                   : r.reflection_text
 
                 return (
-                  <a 
-                    key={r.id} 
-                    href={`/keepsake/${r.id}`}
-                    className="honor-card p-7 block hover:border-[#c9b48a] transition-colors"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
-                      <div className="font-medium text-lg tracking-tight text-[#1c252f]">
-                        A visit for {name}
+                  <div key={r.id} className="honor-card p-7 hover:border-[#c9b48a] transition-colors">
+                    <a 
+                      href={`/keepsake/${r.id}`}
+                      className="block"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+                        <div className="font-medium text-lg tracking-tight text-[#1c252f]">
+                          A visit for {name}
+                        </div>
+                        <div className="text-sm text-[#5c656f]">
+                          {date}
+                        </div>
                       </div>
-                      <div className="text-sm text-[#5c656f]">
-                        {date}
+                      <div className="text-sm text-[#5c656f] mb-4">
+                        at {cemetery}
                       </div>
+                      <p className="honor-quote text-[15px] text-[#2a3138]">
+                        “{shortReflection}”
+                      </p>
+                      <div className="mt-1 text-[9px] text-[#8a7754] tracking-[1px]">OFFERED WITH REVERENCE</div>
+                      <div className="mt-4 text-xs text-[#8a7754] tracking-widest">
+                        VIEW THE FULL KEEPSAKE →
+                      </div>
+                    </a>
+
+                    {/* Social share for this public remembrance */}
+                    <div className="mt-2 flex gap-2 justify-end text-[10px]">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const shareText = `A quiet remembrance at ${cemetery}: "${shortReflection}"\n\nShared via HonorProxy — someone stood at the grave for a family who could not be there.\n\nSee more: ${window.location.origin}/remembrances\n\n#HonorProxy #Remembrance`
+                          window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank')
+                        }}
+                        className="px-2 py-0.5 border border-[#d8d2c6] rounded hover:bg-white"
+                      >
+                        X
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const shareText = `A quiet remembrance at ${cemetery}: "${shortReflection}"\n\nShared via HonorProxy — someone stood at the grave for a family who could not be there.\n\nSee more: ${window.location.origin}/remembrances\n\n#HonorProxy #Remembrance`
+                          navigator.clipboard.writeText(shareText)
+                        }}
+                        className="px-2 py-0.5 border border-[#d8d2c6] rounded hover:bg-white"
+                      >
+                        Copy
+                      </button>
                     </div>
-                    <div className="text-sm text-[#5c656f] mb-4">
-                      at {cemetery}
-                    </div>
-                    <p className="honor-quote text-[15px] text-[#2a3138]">
-                      “{shortReflection}”
-                    </p>
-                    <div className="mt-1 text-[9px] text-[#8a7754] tracking-[1px]">OFFERED WITH REVERENCE</div>
-                    <div className="mt-4 text-xs text-[#8a7754] tracking-widest">
-                      VIEW THE FULL KEEPSAKE →
-                    </div>
-                  </a>
+                  </div>
                 )
               })}
             </div>

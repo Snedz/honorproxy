@@ -446,24 +446,42 @@ export default function VisitPage() {
           {justCompletedReport && (
             <div className="mt-8 border-t border-[#d4c9ad] pt-6">
               <div className="text-sm text-[#3f4a3f] mb-3">Help others discover this quiet service.</div>
-              <button
-                onClick={() => {
-                  const name = justCompletedReport.grave_requests?.deceased_full_name
-                  const cemetery = justCompletedReport.grave_requests?.cemeteries?.name
-                  const reflection = justCompletedReport.reflection_text
-                  const date = new Date(justCompletedReport.visit_date).toLocaleDateString()
+              <div className="flex flex-wrap gap-3 justify-center">
+                <button
+                  onClick={() => {
+                    const name = justCompletedReport.grave_requests?.deceased_full_name
+                    const cemetery = justCompletedReport.grave_requests?.cemeteries?.name
+                    const reflection = justCompletedReport.reflection_text
+                    const date = new Date(justCompletedReport.visit_date).toLocaleDateString()
 
-                  const shareText = `Today I visited ${name} at ${cemetery} through HonorProxy on behalf of their family.\n\nHere's what I wrote:\n\n"${reflection}"\n\nIf you have someone buried there who you can't visit, you can request a visit at honorproxy.com.\n\nSmall acts of remembrance matter.`
+                    const shareText = `Today I visited ${name} at ${cemetery} through HonorProxy on behalf of their family.\n\nHere's what I wrote:\n\n"${reflection}"\n\nIf you have someone buried there who you can't visit, you can request a visit at honorproxy.com.\n\nSmall acts of remembrance matter.`
 
-                  navigator.clipboard.writeText(shareText)
-                    .then(() => alert('Message copied. You can paste it on X, Instagram, or Facebook.'))
-                    .catch(() => alert('Could not copy. Here is the text:\n\n' + shareText))
-                }}
-                className="rounded-full border border-[#d4c9ad] bg-white px-6 py-2 text-sm font-medium text-[#3f4a3f] hover:bg-[#f9f7f2]"
-              >
-                Copy shareable message
-              </button>
-              <p className="text-[10px] tracking-widest text-[#6b7582] mt-2">FOR X, FACEBOOK, OR INSTAGRAM</p>
+                    const tweetUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}`
+                    window.open(tweetUrl, '_blank')
+                  }}
+                  className="rounded-full border border-[#d4c9ad] bg-white px-5 py-2 text-sm font-medium text-[#3f4a3f] hover:bg-[#f9f7f2]"
+                >
+                  Share on X
+                </button>
+                <button
+                  onClick={() => {
+                    const name = justCompletedReport.grave_requests?.deceased_full_name
+                    const cemetery = justCompletedReport.grave_requests?.cemeteries?.name
+                    const reflection = justCompletedReport.reflection_text
+                    const date = new Date(justCompletedReport.visit_date).toLocaleDateString()
+
+                    const shareText = `Today I visited ${name} at ${cemetery} through HonorProxy on behalf of their family.\n\nHere's what I wrote:\n\n"${reflection}"\n\nIf you have someone buried there who you can't visit, you can request a visit at honorproxy.com.\n\nSmall acts of remembrance matter.`
+
+                    navigator.clipboard.writeText(shareText)
+                      .then(() => alert('Message copied. Paste on Instagram, Facebook, or elsewhere.'))
+                      .catch(() => alert('Could not copy. Here is the text:\n\n' + shareText))
+                  }}
+                  className="rounded-full border border-[#d4c9ad] bg-white px-5 py-2 text-sm font-medium text-[#3f4a3f] hover:bg-[#f9f7f2]"
+                >
+                  Copy message
+                </button>
+              </div>
+              <p className="text-[10px] tracking-widest text-[#6b7582] mt-2">Post on X or copy for other social</p>
             </div>
           )}
         </div>
