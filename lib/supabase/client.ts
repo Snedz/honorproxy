@@ -81,8 +81,7 @@ export function createClient() {
   // - Plain SUPABASE_* (what Supabase's official Vercel integration often injects)
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    process.env.SUPABASE_URL ||
-    process.env.NEXT_PUBLIC_SUPABASE_URL
+    process.env.SUPABASE_URL
 
   const supabaseKey =
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
@@ -117,10 +116,17 @@ export function createClient() {
   if (!looksLikeValidSupabase) {
     if (!(globalThis as any).__honorproxy_supabase_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_config_logged = true
+      console.error('[Supabase] Invalid config detected in build:', {
+        urlSample: supabaseUrl ? supabaseUrl.slice(0, 40) + '...' : 'MISSING',
+        keySample: supabaseKey ? supabaseKey.slice(0, 15) + '...' : 'MISSING',
+        keyLength: supabaseKey ? supabaseKey.length : 0,
+        hasSupabaseCo: supabaseUrl?.includes('.supabase.co'),
+        startsWithEyJ: supabaseKey?.startsWith('eyJ'),
+      })
       const msg =
         '[Supabase] Supabase URL or ANON_KEY in this build looks invalid. ' +
-        'Common causes: copied the wrong key (must be the "anon" "public" key, NOT service_role), key from a different Supabase project, or truncated when pasting. ' +
-        'Fix in Vercel Project Settings → Environment Variables (Production), then redeploy.'
+        'Common causes: wrong key (must use the "anon" "public" key from Supabase dashboard, never service_role), key from different project, or the Vercel integration has not yet synced the vars for this build. ' +
+        'If you just installed the Supabase Vercel integration: go to the integration, ensure your Vercel project is linked, then trigger a fresh Redeploy in Vercel for Production.'
       console.error(msg)
     }
     return createStubClient(
