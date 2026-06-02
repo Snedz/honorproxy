@@ -89,7 +89,7 @@ HonorProxy is designed to deploy easily on Vercel.
 2. Import the project in Vercel.
 3. Add the required environment variables (see `.env.local.example`):
    - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`  (must be the **anon** **public** key from Supabase, *not* the service_role secret key)
    - `RESEND_API_KEY`
    - `RESEND_FROM_EMAIL` (strongly recommended once you have a verified domain)
    **Important**: When adding/editing in Vercel, select the **Production** environment (and Preview if you test previews). NEXT_PUBLIC_* vars are baked into the client JS bundle at build time.
