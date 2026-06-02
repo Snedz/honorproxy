@@ -44,14 +44,23 @@ export async function createClient() {
   const cookieStore = await cookies()
 
   // Support both common naming conventions (see client.ts for details)
+  // Also support publishable keys from newer Supabase setups.
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.SUPABASE_URL
 
-  const supabaseKey =
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_KEY
+  const keyCandidates = [
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    process.env.SUPABASE_ANON_KEY,
+    process.env.SUPABASE_KEY,
+    process.env.SUPABASE_PUBLISHABLE_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  ].filter((k): k is string => !!k)
+
+  let supabaseKey = keyCandidates.find(k => k.startsWith('eyJ') && k.length > 100)
+  if (!supabaseKey) {
+    supabaseKey = keyCandidates[0] || ''
+  }
 
   if (!supabaseUrl || !supabaseKey) {
     if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
@@ -74,6 +83,12 @@ export async function createClient() {
   if (!looksLikeValidSupabase) {
     if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_server_config_logged = true
+      console.error('[Supabase] Invalid server config detected:', {
+        urlSample: supabaseUrl ? supabaseUrl.slice(0, 40) + '...' : 'MISSING',
+        keySample: supabaseKey ? supabaseKey.slice(0, 15) + '...' : 'MISSING',
+        keyLength: supabaseKey ? supabaseKey.length : 0,
+        allCandidateLengths: keyCandidates.map(k => k.length),
+      })
       const msg =
         '[Supabase] Supabase URL or ANON_KEY at server runtime looks invalid. ' +
         'Check that the values set in Vercel (Production) are correct (anon key, matching project). Redeploy after fixing.'

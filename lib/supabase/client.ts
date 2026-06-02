@@ -79,14 +79,24 @@ export function createClient() {
   // Support both common naming conventions:
   // - NEXT_PUBLIC_* (recommended for Next.js client bundles, what our .env.example and most templates use)
   // - Plain SUPABASE_* (what Supabase's official Vercel integration often injects)
+  // Also support publishable keys from newer Supabase setups.
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
     process.env.SUPABASE_URL
 
-  const supabaseKey =
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_KEY
+  const keyCandidates = [
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    process.env.SUPABASE_ANON_KEY,
+    process.env.SUPABASE_KEY,
+    process.env.SUPABASE_PUBLISHABLE_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  ].filter((k): k is string => !!k)
+
+  // Prefer a key that looks like a valid long anon JWT if available (helps when multiple keys are set, some wrong/truncated)
+  let supabaseKey = keyCandidates.find(k => k.startsWith('eyJ') && k.length > 100)
+  if (!supabaseKey) {
+    supabaseKey = keyCandidates[0] || ''
+  }
 
   if (!supabaseUrl || !supabaseKey) {
     // Log only once per page load / module to avoid spamming the console on every component
@@ -122,6 +132,7 @@ export function createClient() {
         keyLength: supabaseKey ? supabaseKey.length : 0,
         hasSupabaseCo: supabaseUrl?.includes('.supabase.co'),
         startsWithEyJ: supabaseKey?.startsWith('eyJ'),
+        allCandidateLengths: keyCandidates.map(k => k.length),
       })
       const msg =
         '[Supabase] Supabase URL or ANON_KEY in this build looks invalid. ' +
@@ -130,7 +141,7 @@ export function createClient() {
       console.error(msg)
     }
     return createStubClient(
-      'Supabase configuration in this build is invalid (bad API key or URL). Make sure you are using the "anon public" key (never service_role). If you just installed the Supabase Vercel integration, go back to it, re-link your Vercel project, then redeploy in Vercel.'
+      'Supabase configuration in this build is invalid (bad API key or URL). Make sure you are using the "anon public" key (never service_role). Copy the FULL long value from your SUPABASE_ANON_KEY (or the correct publishable/anon key) in Vercel into NEXT_PUBLIC_SUPABASE_ANON_KEY. If you just installed the Supabase Vercel integration, go back to it, re-link your Vercel project, then redeploy in Vercel.'
     )
   }
 
