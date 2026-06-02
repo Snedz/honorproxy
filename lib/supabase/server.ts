@@ -47,9 +47,12 @@ export async function createClient() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing at server runtime. ' +
-      'Set the environment variables in Vercel (Production + Preview) and redeploy.'
-    console.error(msg)
+    if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
+      ;(globalThis as any).__honorproxy_supabase_server_config_logged = true
+      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing at server runtime. ' +
+        'Set the environment variables in Vercel (Production + Preview) and redeploy.'
+      console.error(msg)
+    }
     return createServerStub()
   }
 

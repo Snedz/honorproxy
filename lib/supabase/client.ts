@@ -80,10 +80,15 @@ export function createClient() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing in the client bundle. ' +
-      'This usually means the Vercel environment variables were not set (or not set for Production) at the time of the last build. ' +
-      'Set them in Project Settings → Environment Variables (Production), then redeploy.'
-    console.error(msg)
+    // Log only once per page load / module to avoid spamming the console on every component
+    // that needs Supabase while the user is still fixing the Vercel configuration.
+    if (!(globalThis as any).__honorproxy_supabase_config_logged) {
+      ;(globalThis as any).__honorproxy_supabase_config_logged = true
+      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing in the client bundle. ' +
+        'This usually means the Vercel environment variables were not set (or not set for Production) at the time of the last build. ' +
+        'Set them in Project Settings → Environment Variables (Production), then redeploy.'
+      console.error(msg)
+    }
     // Return a stub instead of throwing. This eliminates unhandled promise rejections
     // and allows the page to render its static/public content. Dynamic parts (lists,
     // auth state, forms that need DB) will simply show empty or disabled states.
