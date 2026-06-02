@@ -4,6 +4,13 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
 
+// Pure helper for public Storage URLs — no client instantiation needed.
+// Safe to call during static prerender.
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 interface OpenRequest {
   id: string
   deceased_full_name: string
@@ -57,17 +64,19 @@ export default function VisitPage() {
     photos: [] as File[]
   })
 
-  const supabase = createClient()
+  // No top-level createClient() — all Supabase usage is now inside effects or
+  // async handlers. This allows the page to be statically prerendered safely.
 
   useEffect(() => {
     async function init() {
+      const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
 
       if (user) {
         await Promise.all([
-          loadOpenRequests(),
-          loadMyVisits(user.id)
+          loadOpenRequests(supabase),
+          loadMyVisits(user.id, supabase)
         ])
       }
       setLoading(false)
@@ -75,8 +84,9 @@ export default function VisitPage() {
     init()
   }, [])
 
-  async function loadOpenRequests() {
-    const { data, error } = await supabase
+  async function loadOpenRequests(supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+    const { data, error } = await client
       .from('grave_requests')
       .select(`
         id,
@@ -95,8 +105,9 @@ export default function VisitPage() {
     if (!error && data) setRequests(data as OpenRequest[])
   }
 
-  async function loadMyVisits(userId: string) {
-    const { data, error } = await supabase
+  async function loadMyVisits(userId: string, supabase?: ReturnType<typeof createClient>) {
+    const client = supabase || createClient()
+    const { data, error } = await client
       .from('visits')
       .select(`
         id,
@@ -127,7 +138,7 @@ export default function VisitPage() {
       .map((v: any) => v.id)
 
     if (completedVisitIds.length > 0) {
-      const { data: reportsData } = await supabase
+      const { data: reportsData } = await client
         .from('visit_reports')
         .select(`
           id,
@@ -163,7 +174,9 @@ export default function VisitPage() {
     setClaimingId(requestId)
     setMessage(null)
 
-    const { error: updateError } = await (supabase
+    const client = createClient()
+
+    const { error: updateError } = await (client
       .from('grave_requests') as any)
       .update({
         status: 'claimed',
@@ -179,7 +192,7 @@ export default function VisitPage() {
       return
     }
 
-    const { error: visitError } = await (supabase.from('visits') as any)
+    const { error: visitError } = await (client.from('visits') as any)
       .insert({
         grave_request_id: requestId,
         visitor_id: user.id,
@@ -192,7 +205,7 @@ export default function VisitPage() {
       setMessage("Request claimed successfully! You can now prepare for the visit.")
     }
 
-    await Promise.all([loadOpenRequests(), loadMyVisits(user.id)])
+    await Promise.all([loadOpenRequests(client), loadMyVisits(user.id, client)])
     setClaimingId(null)
   }
 
@@ -226,13 +239,15 @@ export default function VisitPage() {
     if (!user) return
     setMessage(null)
 
+    const client = createClient()
+
     try {
       // 1. Upload photos
       const photoPaths: string[] = []
 
       for (const file of reportForm.photos) {
         const filePath = `${user.id}/${visitId}/${Date.now()}-${file.name}`
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError } = await client.storage
           .from('visit-photos')
           .upload(filePath, file)
 
@@ -243,7 +258,7 @@ export default function VisitPage() {
       }
 
       // 2. Insert report
-      const { error: reportError } = await (supabase.from('visit_reports') as any)
+      const { error: reportError } = await (client.from('visit_reports') as any)
         .insert({
           visit_id: visitId,
           grave_request_id: graveRequestId,
@@ -257,19 +272,19 @@ export default function VisitPage() {
       if (reportError) throw reportError
 
       // 3. Update visit status
-      await (supabase.from('visits') as any)
+      await (client.from('visits') as any)
         .update({ status: 'completed' })
         .eq('id', visitId)
 
       // 4. Update request status to fulfilled
-      await (supabase.from('grave_requests') as any)
+      await (client.from('grave_requests') as any)
         .update({ status: 'fulfilled' })
         .eq('id', graveRequestId)
 
       // 5. Fire off email to the family (non-blocking for MVP)
       try {
         // We now store requester_email directly on the request row for reliability
-        const { data: reqData } = await supabase
+        const { data: reqData } = await client
           .from('grave_requests')
           .select(`
             requester_email,
@@ -319,7 +334,7 @@ export default function VisitPage() {
       setJustCompletedVisitId(visitId)
 
       // Fetch the report we just created for sharing
-      const { data: newReport } = await supabase
+      const { data: newReport } = await client
         .from('visit_reports')
         .select(`
           reflection_text,
@@ -338,7 +353,7 @@ export default function VisitPage() {
       // Helpful console message for debugging
       console.log('%c[HonorProxy] Report submitted. Check Network tab for /api/send-report call and console for email status.', 'color:#666')
 
-      await loadMyVisits(user.id)
+      await loadMyVisits(user.id, client)
     } catch (err: any) {
       setMessage("Error submitting report: " + err.message)
     }
@@ -746,11 +761,11 @@ export default function VisitPage() {
                             <div className="honor-label mb-2.5">Photos from the visit</div>
                             <div className="flex flex-wrap gap-3">
                               {report.photo_urls.map((path: string, idx: number) => {
-                                const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
+                                const url = getPublicUrl(path)
                                 return (
-                                  <a key={idx} href={data.publicUrl} target="_blank" rel="noopener noreferrer">
+                                  <a key={idx} href={url} target="_blank" rel="noopener noreferrer">
                                     <img 
-                                      src={data.publicUrl} 
+                                      src={url} 
                                       alt={`Photo ${idx + 1}`} 
                                       className="w-24 h-24 object-cover honor-photo" 
                                     />
@@ -783,7 +798,8 @@ export default function VisitPage() {
                                   onKeyDown={async (e) => {
                                     if (e.key === 'Enter' && e.currentTarget.value.trim()) {
                                       const reply = e.currentTarget.value.trim()
-                                      const { error } = await (supabase.from('visit_reports') as any)
+                                      const client = createClient()
+                                      const { error } = await (client.from('visit_reports') as any)
                                         .update({
                                           visitor_reply: reply,
                                           visitor_reply_sent_at: new Date().toISOString()
