@@ -158,11 +158,11 @@ export default function RemembrancesPage() {
         </p>
         {totalPublished > 0 && (
           <p className="mt-2 text-xs tracking-widest text-[#7a838e]">
-            {totalPublished} remembrances offered in prayer, shared with permission
+            {totalPublished} remembrances shared with permission
           </p>
         )}
         <p className="mt-1 text-xs text-[#5c656f] max-w-prose mx-auto">
-          These prayerful visits are the living record of care offered before God — shared so that no one has to grieve alone, and that the memory of the faithful departed may endure.
+          These quiet visits are the living record of care — shared so that no one has to grieve alone in that particular way.
         </p>
       </div>
 

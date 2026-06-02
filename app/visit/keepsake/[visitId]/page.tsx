@@ -225,7 +225,7 @@ export default function KeepsakePage() {
                 className="mx-auto mb-4 border border-[#d8d2c6] p-2 bg-white"
               />
               <p className="text-sm text-[#5c656f] max-w-xs mx-auto">
-                Scan to open the full keepsake. Print this QR code and leave it respectfully at the grave as a sign of prayer and remembrance.
+                Scan to open the full keepsake. Print this QR code and leave it respectfully at the grave.
               </p>
               <button 
                 onClick={() => {
@@ -250,7 +250,7 @@ export default function KeepsakePage() {
             <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">
               A Visit I Made
             </h1>
-            <p className="text-[#5c656f] mt-2">A personal record of prayer and remembrance</p>
+            <p className="text-[#5c656f] mt-2">A personal record of remembrance</p>
           </div>
 
           <div className="space-y-8 text-[15px] leading-relaxed">
@@ -345,7 +345,7 @@ export default function KeepsakePage() {
                       ? `${report.visits?.grave_requests?.section ? 'Section ' + report.visits.grave_requests.section : ''}${report.visits?.grave_requests?.grave_number ? ' Grave ' + report.visits.grave_requests.grave_number : ''}`.trim()
                       : ''
 
-                    const shareText = `I stood at the grave of ${name} at ${cemetery}${graveLoc ? ' (' + graveLoc + ')' : ''} on ${date} through HonorProxy and offered prayer on behalf of their family.\n\n"${reflection}"\n\nIf you have a loved one buried at a national cemetery and cannot visit, a faithful stranger can go in your place to pray at honorproxy.com.\n\nMay their souls rest in eternal peace.`
+                    const shareText = `I stood at the grave of ${name} at ${cemetery}${graveLoc ? ' (' + graveLoc + ')' : ''} on ${date} through HonorProxy.\n\n"${reflection}"\n\nIf you have a loved one buried at a national cemetery and cannot visit, a stranger can stand there for you at honorproxy.com.\n\nSmall acts of remembrance matter.`
 
                     navigator.clipboard.writeText(shareText)
                       .then(() => alert('Note copied. You can paste it anywhere — X, a message to the family, or your own records.'))

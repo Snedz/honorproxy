@@ -62,11 +62,11 @@ export default function PublicImpactStats() {
         <div className="flex flex-col sm:flex-row justify-center gap-x-12 gap-y-4 text-sm">
           <div>
             <span className="font-semibold text-[#1c252f] text-lg">{stats.visits}</span>
-            <span className="ml-2 text-[#5c656f]">quiet visits made</span>
+            <span className="ml-2 text-[#5c656f]">visits made</span>
           </div>
           <div>
             <span className="font-semibold text-[#1c252f] text-lg">{stats.cemeteries}</span>
-            <span className="ml-2 text-[#5c656f]">cemeteries touched with care</span>
+            <span className="ml-2 text-[#5c656f]">cemeteries touched</span>
           </div>
         </div>
         <p className="mt-2 text-xs tracking-widest text-[#7a838e]">

@@ -270,9 +270,9 @@ export default function ReviewQueuePage() {
     <div className="max-w-4xl mx-auto px-6 py-12">
       <div className="mb-8">
         <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">Review Queue</h1>
-        <p className="text-[#5c656f] mt-1.5">Human review before any family receives the record of prayers offered at the grave. Sacred care at this step protects trust and reverence.</p>
+        <p className="text-[#5c656f] mt-1.5">Human review before any family receives a visit report. Quiet care at this step protects trust.</p>
         <p className="mt-1 text-sm text-[#5c656f] max-w-prose">
-          You are the quiet gatekeeper. Every decision here protects the sacred dignity of the prayers and remembrance offered at the grave.
+          You are the quiet gatekeeper. Every decision here protects the dignity of remembrance.
         </p>
         {rejectedCount > 0 && (
           <div className="mt-2 inline-block rounded-full border border-[#d8d2c6] bg-white px-3 py-0.5 text-xs text-[#5c656f]">
@@ -500,7 +500,7 @@ export default function ReviewQueuePage() {
       </div>
 
       <div className="mt-10 text-xs text-[#5c656f] text-center max-w-md mx-auto">
-        This is a deliberate human gate. Every approved report carries someone’s prayerful presence and words offered before God to a family who could not be there.
+        This is a deliberate human gate. Every approved report carries someone’s quiet presence to a family who could not be there.
       </div>
     </div>
   )

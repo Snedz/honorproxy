@@ -382,7 +382,7 @@ export default function VisitPage() {
       <div className="flex items-baseline justify-between mb-9">
         <div>
           <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">Offer to visit</h1>
-          <p className="text-[#5c656f] mt-1.5">Claim open requests and deliver a prayerful report with photographs and the words you offered at the grave.</p>
+          <p className="text-[#5c656f] mt-1.5">Claim open requests and deliver a respectful report with photos and reflection.</p>
         </div>
         <a href="/my-requests" className="text-sm text-[#5c656f] hover:text-[#1c252f]">My Requests →</a>
       </div>
@@ -391,9 +391,9 @@ export default function VisitPage() {
       {myVisits.length === 0 && !justCompletedVisitId && requests.length > 0 && (
         <div className="mb-8 rounded-2xl border border-[#d8d2c6] bg-[#f9f7f2] p-6 text-[#3f4a3f]">
           <p className="text-[15px] leading-relaxed">
-            Welcome. If a request speaks to your heart, claim it. When you have visited the grave, return here to share the prayer or words you spoke there, together with photographs as witness.
+            Welcome. If a request speaks to you, claim it. When you have visited the grave, return here to share a quiet reflection and photographs.
           </p>
-          <p className="mt-2 text-xs tracking-widest text-[#6b7582]">EVERY ACT OF PRAYERFUL REMEMBRANCE MATTERS.</p>
+          <p className="mt-2 text-xs tracking-widest text-[#6b7582]">EVERY VISIT MATTERS.</p>
         </div>
       )}
 
@@ -405,9 +405,9 @@ export default function VisitPage() {
           </div>
           <h2 className="text-3xl font-semibold tracking-tighter text-[#2f3a2f]">Thank you for standing in.</h2>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[#3f4a3f]">
-            Your report, photographs, and the prayer or words you offered at the grave have been submitted for review.
+            Your report, photos, and reflection have been submitted for review.
             Once approved, they will be delivered privately to the family.
-            You stood on that holy ground and prayed when they could not. That act of intercession matters deeply in the sight of God.
+            You stood at their grave when they could not. That act of remembrance matters deeply.
           </p>
           <p className="mt-3 text-xs text-[#5c656f]">
             You can view and manage your keepsake in the meantime.
@@ -453,7 +453,7 @@ export default function VisitPage() {
                   const reflection = justCompletedReport.reflection_text
                   const date = new Date(justCompletedReport.visit_date).toLocaleDateString()
 
-                  const shareText = `Today I stood at the grave of ${name} at ${cemetery} through HonorProxy and offered prayer on behalf of their family.\n\nHere is what I prayed and wrote there:\n\n"${reflection}"\n\nIf you have a loved one buried at a national cemetery and cannot visit, a faithful stranger can go in your place to pray at honorproxy.com.\n\nMay their souls rest in eternal peace.`
+                  const shareText = `Today I visited ${name} at ${cemetery} through HonorProxy on behalf of their family.\n\nHere's what I wrote:\n\n"${reflection}"\n\nIf you have someone buried there who you can't visit, you can request a visit at honorproxy.com.\n\nSmall acts of remembrance matter.`
 
                   navigator.clipboard.writeText(shareText)
                     .then(() => alert('Message copied. You can paste it on X, Instagram, or Facebook.'))
@@ -475,7 +475,7 @@ export default function VisitPage() {
             Request claimed successfully.
           </div>
           <p className="text-[#3f4a3f] text-[15px] leading-relaxed">
-            Thank you. You have taken this sacred duty upon yourself. When you are ready to visit the grave, return here to record the prayers and remembrance you offered there.
+            Thank you. You have taken this remembrance on. When you are ready to visit, you can return here to prepare your report.
           </p>
           <p className="mt-3 text-xs tracking-widest text-[#6b7582]">
             THE FAMILY WILL RECEIVE YOUR WORDS AND PHOTOS AFTER HUMAN REVIEW.
@@ -577,16 +577,16 @@ export default function VisitPage() {
                       </div>
 
                       <div>
-                        <label className="block honor-label mb-1.5">Your prayer or reflection — what you prayed, felt, or said at the grave</label>
+                        <label className="block honor-label mb-1.5">Your reflection — what you felt, saw, or said</label>
                         <textarea
                           value={reportForm.reflection}
                           onChange={(e) => setReportForm({ ...reportForm, reflection: e.target.value })}
                           rows={6}
                           className="w-full rounded-xl border px-4 py-3 honor-quote"
-                          placeholder="I stood at the grave and prayed for the repose of his soul and for his family. The wind moved through the trees as I read their message aloud..."
+                          placeholder="I stood quietly at the grave for several minutes. The light was soft through the trees..."
                           required
                         />
-                        <p className="text-xs text-[#7a838e] mt-1.5">A few heartfelt sentences or a short prayer are enough. Speak from the heart as if the family were listening at the grave with you.</p>
+                        <p className="text-xs text-[#7a838e] mt-1.5">A few heartfelt sentences are enough. Keep it personal and true.</p>
                       </div>
 
                       <div>

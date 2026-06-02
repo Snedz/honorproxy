@@ -123,7 +123,7 @@ export default function MyRequestsPage() {
       <div className="flex items-baseline justify-between mb-8">
         <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">My Requests</h1>
         <p className="text-sm text-[#5c656f] mt-1 mb-6 max-w-prose">
-          These are the requests you have entrusted to HonorProxy. Each one represents a sacred promise that someone will stand at the grave in prayer on your behalf.
+          These are the requests you have entrusted to HonorProxy. Each one represents a quiet promise that someone will stand at the grave on your behalf.
         </p>
         <a href="/request" className="text-sm rounded-full border border-[#d8d2c6] px-5 py-2 hover:bg-white">New request</a>
       </div>

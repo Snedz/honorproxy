@@ -88,11 +88,7 @@ export default function Header() {
           <a href="/request" className="text-[#5c656f] hover:text-[#1c252f] transition-colors">Make a request</a>
           <a href="/visit" className="text-[#5c656f] hover:text-[#1c252f] transition-colors">I&apos;m visiting</a>
 
-          {!loading && user && (
-            <a href="/my-requests" className="text-[#5c656f] hover:text-[#1c252f] transition-colors font-medium">
-              My Requests
-            </a>
-          )}
+          {/* My Requests moved into the user menu for signed-in users to keep the top bar uncluttered */}
         </nav>
 
         {/* Right side: auth / user area (desktop) */}
@@ -114,6 +110,7 @@ export default function Header() {
 
                   {userMenuOpen && (
                     <div className="absolute right-0 mt-2 w-52 rounded-xl border border-[#d8d2c6] bg-white shadow-lg py-1.5 text-sm z-50">
+                      <a href="/my-requests" onClick={closeMenus} className="block px-4 py-2 text-[#5c656f] hover:text-[#1c252f] hover:bg-[#f9f7f2]">My Requests</a>
                       <a href="/keepsakes" onClick={closeMenus} className="block px-4 py-2 text-[#5c656f] hover:text-[#1c252f] hover:bg-[#f9f7f2]">My Keepsakes</a>
                       <a href="/review" onClick={closeMenus} className="block px-4 py-2 text-[#5c656f] hover:text-[#1c252f] hover:bg-[#f9f7f2]">Review Queue</a>
                       <a href="/conduct" onClick={closeMenus} className="block px-4 py-2 text-[#5c656f] hover:text-[#1c252f] hover:bg-[#f9f7f2]">Guidelines</a>

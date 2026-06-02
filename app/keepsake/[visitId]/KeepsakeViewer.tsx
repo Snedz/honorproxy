@@ -146,7 +146,7 @@ export default function KeepsakeViewer() {
         {showQR && (
           <div className="mb-8 print:hidden">
             <div className="honor-card p-6 text-center">
-              <div className="honor-label mb-3">Share this remembrance and prayer</div>
+              <div className="honor-label mb-3">Share this remembrance</div>
               <img 
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(window.location.origin + '/keepsake/' + visitId)}`} 
                 alt="QR Code"
@@ -253,7 +253,7 @@ export default function KeepsakeViewer() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-[#d8d2c6] text-center text-xs tracking-widest text-[#7a838e]">
-            A prayerful act of remembrance through HonorProxy
+            A quiet act of remembrance through HonorProxy
           </div>
 
           {/* Print-only QR Code */}
@@ -278,7 +278,7 @@ export default function KeepsakeViewer() {
             Download PDF
           </button>
           <p className="mt-3 text-[11px] text-[#7a838e] tracking-widest">
-            This record was left with prayer and care at the grave.
+            This record was left with care at the grave.
           </p>
           <p className="mt-1 text-[10px] text-[#9ca3af]">
             Choose “Save as PDF” in the print dialog for best results.

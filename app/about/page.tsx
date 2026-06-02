@@ -13,7 +13,7 @@ export default function AboutPage() {
         </div>
         <h1 className="text-5xl font-semibold tracking-[-2px] text-[#1c252f]">HonorProxy</h1>
         <p className="mt-4 text-xl text-[#3f4852] leading-tight">
-          A prayerful act of remembrance for those who served.
+          A quiet act of remembrance.
         </p>
       </div>
 
@@ -21,20 +21,20 @@ export default function AboutPage() {
         <div>
           <div className="honor-label mb-3">The need</div>
           <p className="text-balance">
-            Some families cannot stand at the graves of their loved ones — because of distance, health, age, or the simple fact that life moved them far away. On Memorial Day, Veterans Day, birthdays, or anniversaries, the ache remains. The souls of those who answered the call under the old Department of War and its successors lie in honored ground, yet their own cannot always come to pray.
+            Some families cannot stand at the graves of their loved ones — because of distance, health, age, or the simple fact that life moved them far away. On Memorial Day, Veterans Day, birthdays, or anniversaries, the ache remains.
           </p>
           <p className="mt-3">
-            HonorProxy exists so that no one must bear that particular loneliness of the heart. A stranger will go in their place to offer prayer and presence before the Lord.
+            HonorProxy exists so that no one has to grieve alone in that particular way.
           </p>
         </div>
 
         <div>
           <div className="honor-label mb-3">What we do</div>
           <p>
-            A real person — a volunteer visitor — goes to the cemetery on their behalf. They stand at the grave on sacred ground. They take respectful photographs as witness. They may leave a simple tribute if requested. And they write the prayer, the words of remembrance, or the thoughts they held in the presence of the dead — an act of intercession offered for the family and for the repose of the soul.
+            A real person — a volunteer visitor — goes to the cemetery on their behalf. They stand at the grave. They take respectful photographs. They leave a simple tribute if requested. And they write a personal reflection of the visit.
           </p>
           <p className="mt-3">
-            That report is delivered privately to the family. A sacred, human act of remembrance and prayer, carried across the distance in the name of love and duty.
+            That report is delivered privately to the family. A small, human act of remembrance, carried across the distance.
           </p>
         </div>
 
@@ -43,18 +43,18 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-3 gap-6">
             <div className="space-y-1.5">
               <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">01</div>
-              <div className="font-medium">Entrust the Prayer</div>
-              <p className="text-sm text-[#5c656f]">A family shares the name, cemetery, and the words or blessing they wish carried in prayer to the grave.</p>
+              <div className="font-medium">Request</div>
+              <p className="text-sm text-[#5c656f]">A family shares the name, cemetery, and any message they wish carried to the grave.</p>
             </div>
             <div className="space-y-1.5">
               <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">02</div>
-              <div className="font-medium">Stand in Intercession</div>
-              <p className="text-sm text-[#5c656f]">Someone already planning to visit that cemetery claims the request and goes to the grave to pray and remember in their stead.</p>
+              <div className="font-medium">Claim</div>
+              <p className="text-sm text-[#5c656f]">Someone already planning to visit that cemetery claims the request and prepares with care.</p>
             </div>
             <div className="space-y-1.5">
               <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">03</div>
-              <div className="font-medium">Deliver the Witness</div>
-              <p className="text-sm text-[#5c656f]">Photos and the prayer or reflection spoken at the grave are sent back privately to the family as a record of presence before God.</p>
+              <div className="font-medium">Deliver</div>
+              <p className="text-sm text-[#5c656f]">Photos, a written reflection, and a quiet sense of presence are sent back to the family.</p>
             </div>
           </div>
         </div>
@@ -62,26 +62,26 @@ export default function AboutPage() {
         <div className="pt-4 border-t border-[#d8d2c6]">
           <div className="honor-label mb-3">The long view</div>
           <p>
-            We began with four major U.S. national cemeteries — Arlington, Fort Snelling, Golden Gate, and Quantico — the resting places of those who served when the call came under the Department of War and in the wars that followed.
+            We began with four major U.S. national cemeteries — Arlington, Fort Snelling, Golden Gate, and Quantico — because that is where the need was most visible to us.
           </p>
           <p className="mt-3 font-medium text-[#2a3138]">
-            But this is built to scale to every cemetery where the faithful departed lie — and one day, beyond.
+            But this is built to scale to every cemetery on earth — and one day, beyond.
           </p>
           <p className="mt-3">
-            The same simple act of prayerful presence can be offered anywhere a grave exists and loved ones are far away. Technology serves only to bind one soul praying at the grave to another who cannot be there. The sacred duty of standing in before God is what matters.
+            The same simple, respectful model can work anywhere people are buried and loved ones are far away. The technology is secondary. The human act of standing in is what matters.
           </p>
           <p className="mt-3 text-sm text-[#5c656f]">
-            The public remembrances you see on this site are the quiet traces of these visits — shared with permission so that others may know that the dead are not forgotten and that prayers still rise for them.
+            The public remembrances you see on this site are the quiet traces of these visits — shared with permission so that others may feel less alone in their grief.
           </p>
         </div>
 
         <div>
           <div className="honor-label mb-3">Our commitments</div>
           <ul className="space-y-2 text-[15px]">
-            <li>• Every visit is made as an act of prayer and sacred duty, with dignity and without spectacle.</li>
-            <li>• We never commercialize the remembrance of the dead or the prayers offered for them.</li>
-            <li>• The words and photographs are shared only with the family who entrusted their loved one to our care.</li>
-            <li>• We walk in the tradition of honoring those who served the United States in war and peace, and we are on a path toward formal 501(c)(3) nonprofit status.</li>
+            <li>• Every visit is made with dignity and without spectacle.</li>
+            <li>• We never commercialize remembrance.</li>
+            <li>• Data is shared only with the person who will actually stand at the grave.</li>
+            <li>• We are on a path toward formal 501(c)(3) nonprofit status.</li>
           </ul>
         </div>
       </div>
@@ -96,7 +96,10 @@ export default function AboutPage() {
           <a href="/visit" className="text-[#5c656f] hover:text-[#1c252f] underline">Offer to visit</a>
         </div>
         <p className="mt-8 text-xs tracking-widest text-[#7a838e]">
-          HONORPROXY — A ministry of prayer and remembrance for those who served
+          HONORPROXY — A respectful, mission-driven project
+        </p>
+        <p className="mt-4 text-[10px] text-[#7a838e] max-w-prose mx-auto">
+          Our visitors act with reverence. They may offer personal words of remembrance or prayer at the grave according to their own tradition and the wishes of the family.
         </p>
       </div>
     </div>

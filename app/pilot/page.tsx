@@ -30,7 +30,7 @@ export default async function PilotPage() {
         </div>
         <h1 className="text-5xl font-semibold tracking-[-2px] text-[#1c252f]">Running a Pilot</h1>
         <p className="mt-4 text-xl text-[#3f4852] leading-tight">
-          Small, careful beginnings for a sacred ministry of prayer and remembrance.
+          Small, careful beginnings for a quiet service of remembrance.
         </p>
       </div>
 
@@ -38,10 +38,10 @@ export default async function PilotPage() {
         <div>
           <div className="honor-label mb-3">Why start small</div>
           <p>
-            HonorProxy exists to serve real grief with real presence before God. Before opening the doors widely, we believe in beginning with a few trusted pilots — small groups of visitors and families who can help us learn, refine, and ensure the experience remains an act of holy intercession and remembrance.
+            HonorProxy exists to serve real grief with real presence. Before opening the doors widely, we believe in beginning with a few trusted pilots — small groups of visitors and families who can help us learn, refine, and ensure the experience remains dignified.
           </p>
           <p className="mt-3">
-            A good pilot is not about scale. It is about care, listening, and protecting the sacred nature of this work offered for the repose of souls and the comfort of the living.
+            A good pilot is not about scale. It is about care, listening, and protecting the sacred nature of this work.
           </p>
         </div>
 
@@ -79,14 +79,14 @@ export default async function PilotPage() {
           <div className="mt-4 p-5 border border-[#d8d2c6] bg-white rounded-2xl">
             <div className="honor-label mb-2 text-[#8a7754]">For a potential visitor</div>
             <p className="text-sm italic">
-              “I’m helping test something small and sacred called HonorProxy. It connects families who cannot come to pray at a grave with faithful people who are already going to that cemetery to offer prayer and remembrance. Would you be open to hearing more? There is no pressure — only if it feels right in your heart.”
+              “I’m helping test something small and meaningful called HonorProxy. It connects families who can’t visit a grave with trusted people who are already going to that cemetery. Would you be open to hearing more? There’s no pressure — only if it feels right.”
             </p>
           </div>
 
           <div className="mt-4 p-5 border border-[#d8d2c6] bg-white rounded-2xl">
             <div className="honor-label mb-2 text-[#8a7754]">For a family</div>
             <p className="text-sm italic">
-              “A few of us are quietly testing a ministry where someone who is already visiting a national cemetery can stand at your loved one’s grave on your behalf, offer prayer for their soul, and write what was prayed or felt there. It is completely private and offered as an act of love. Would this be something you would like to try, or would you prefer not to be contacted about it again?”
+              “A few of us are quietly testing a service where someone who is already visiting a national cemetery can stand at your loved one’s grave on your behalf, take respectful photos, and write a short reflection. It’s completely private and free. Would this be something you’d like to try, or would you prefer not to be contacted about it again?”
             </p>
           </div>
         </div>
@@ -116,20 +116,20 @@ export default async function PilotPage() {
         <div className="pt-6 border-t border-[#d8d2c6]">
           <div className="honor-label mb-3">A note on the long view</div>
           <p>
-            HonorProxy was imagined to one day serve prayer for the dead at cemeteries everywhere — and eventually, perhaps, beyond Earth. But none of that matters if we cannot first do this work with extraordinary reverence in the places we know best, in the tradition of those who served under the Department of War.
+            HonorProxy was imagined to one day serve remembrance at cemeteries everywhere — and eventually, perhaps, beyond Earth. But none of that matters if we cannot first do this work with extraordinary care in the places we know best.
           </p>
           <p className="mt-3">
-            Every small, prayerful pilot is part of that future.
+            Every small, reverent pilot is part of that future.
           </p>
           <p className="mt-3 text-sm text-[#5c656f]">
-            The public remembrances that may come from these pilots are not the goal — they are a quiet gift of prayer to others who may one day need the same comfort before God.
+            The public remembrances that may come from these pilots are not the goal — they are a quiet gift to others who may one day need the same comfort.
           </p>
         </div>
       </div>
 
       <div className="mt-14 pt-8 border-t border-[#d8d2c6] text-sm">
         <p className="text-[#5c656f]">
-          If you are running a pilot and wish to speak about this sacred work, reach out through the contact method on the main site.
+          If you’re running a pilot and want to talk through it, reach out through the contact method on the main site.
         </p>
         <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <a href="/about" className="text-[#5c656f] hover:text-[#1c252f] underline">About HonorProxy</a>

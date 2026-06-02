@@ -35,7 +35,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   // Title
   doc.setFontSize(18)
   doc.setTextColor(28, 37, 47)
-  doc.text('A Prayer Offered in Remembrance', pageWidth / 2, y, { align: 'center' })
+  doc.text('A Visit Offered in Remembrance', pageWidth / 2, y, { align: 'center' })
   y += 35
 
   // For
@@ -93,7 +93,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   // Reflection
   doc.setFontSize(11)
   doc.setTextColor(90)
-  doc.text('WHAT THE VISITOR PRAYED AND WROTE', margin, y)
+  doc.text('WHAT THE VISITOR WROTE', margin, y)
   y += 18
 
   doc.setFontSize(12)
@@ -158,7 +158,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   // Footer
   doc.setFontSize(9)
   doc.setTextColor(120)
-  doc.text('HonorProxy — A prayerful act of remembrance before God', pageWidth / 2, 780, { align: 'center' })
+  doc.text('HonorProxy — A quiet act of remembrance', pageWidth / 2, 780, { align: 'center' })
 
   // Save
   const safeName = data.deceasedName.replace(/[^a-z0-9]/gi, '_').toLowerCase()

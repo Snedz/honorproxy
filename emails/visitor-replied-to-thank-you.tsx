@@ -126,7 +126,7 @@ export default function VisitorRepliedToThankYouEmail({
               color: '#666',
               lineHeight: '1.5'
             }}>
-              Small exchanges of prayer and gratitude like this are what make the bond between the living and the dead feel alive in the sight of God.
+              Small exchanges like this are what make remembrance feel alive.
               <br /><br />
               Thank you for taking the time to reach out.
             </Section>

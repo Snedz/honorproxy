@@ -2,8 +2,8 @@ export default function Footer() {
   return (
     <footer className="border-t border-[#d8d2c6] py-8 text-center text-[11px] tracking-widest text-[#6b7582]">
       <div className="mx-auto max-w-5xl px-6">
-        HONORPROXY — A ministry of prayer and remembrance • In the tradition of honoring those who served • 501(c)(3) path
-        <div className="mt-1 text-[10px]">Maintained with quiet care before God. © {new Date().getFullYear()}</div>
+        HONORPROXY — A respectful, mission-driven project • 501(c)(3) path • No commercialization of remembrance
+        <div className="mt-1 text-[10px]">Maintained with quiet care. © {new Date().getFullYear()}</div>
 
         {/* Links wrap gracefully instead of forcing one long line */}
         <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[10px]">
