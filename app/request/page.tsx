@@ -110,7 +110,11 @@ export default function RequestPage() {
       }
     } catch (err: any) {
       console.error('[Request] submit error:', err)
-      setError(err?.message || "Something went wrong submitting the request. Check console and ensure Supabase env vars are set in Vercel Production, then redeploy.")
+      let msg = err?.message || "Something went wrong submitting the request."
+      if (msg.toLowerCase().includes('invalid api key') || msg.toLowerCase().includes('not configured') || msg.toLowerCase().includes('invalid')) {
+        msg += ' Check that NEXT_PUBLIC_SUPABASE_ANON_KEY is the correct anon public key set for Production in Vercel, then redeploy.'
+      }
+      setError(msg)
     }
 
     setSubmitting(false)
