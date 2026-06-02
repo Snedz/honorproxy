@@ -5,6 +5,12 @@ import { createClient } from '@/lib/supabase/client'
 import { useParams } from 'next/navigation'
 import { downloadKeepsakePdf } from '@/lib/generate-keepsake-pdf'
 
+// Pure helper for public photo URLs (no client needed at render time).
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 export default function KeepsakePage() {
   const params = useParams<{ visitId: string }>()
   const visitId = params.visitId
@@ -15,12 +21,11 @@ export default function KeepsakePage() {
   const [currentUser, setCurrentUser] = useState<any>(null)
   const [showQR, setShowQR] = useState(false)
 
-  const supabase = createClient()
-
   useEffect(() => {
     async function loadKeepsake() {
       if (!visitId) return
 
+      const supabase = createClient()
       const { data: { user: currentUser } } = await supabase.auth.getUser()
       setCurrentUser(currentUser)
 
@@ -129,10 +134,7 @@ export default function KeepsakePage() {
       }),
       reflection: report.reflection_text,
       tributeLeft: report.tribute_left,
-      photoUrls: (report.photo_urls || []).map((path: string) => {
-        const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
-        return data.publicUrl
-      }),
+      photoUrls: (report.photo_urls || []).map((path: string) => getPublicUrl(path)),
       qrUrl: qrDataUrl,
       graveLocation,
     })
@@ -147,6 +149,7 @@ export default function KeepsakePage() {
       return
     }
 
+    const supabase = createClient()
     const { error } = await (supabase.from('visit_reports') as any)
       .update({ is_public: makePublic })
       .eq('id', (report as any).id)
@@ -312,11 +315,11 @@ export default function KeepsakePage() {
                 <div className="honor-label mb-3">Photos from the visit</div>
                 <div className="grid grid-cols-2 gap-4">
                   {report.photo_urls.map((path: string, idx: number) => {
-                    const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
+                    const publicUrl = getPublicUrl(path)
                     return (
-                      <a key={idx} href={data.publicUrl} target="_blank" rel="noopener noreferrer">
+                      <a key={idx} href={publicUrl} target="_blank" rel="noopener noreferrer">
                         <img 
-                          src={data.publicUrl} 
+                          src={publicUrl} 
                           alt={`Photo ${idx + 1}`} 
                           className="honor-photo w-full aspect-[4/3] object-cover" 
                         />

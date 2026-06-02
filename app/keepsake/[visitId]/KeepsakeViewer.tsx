@@ -5,6 +5,13 @@ import { createClient } from '@/lib/supabase/client'
 import { useParams } from 'next/navigation'
 import { downloadKeepsakePdf } from '@/lib/generate-keepsake-pdf'
 
+// Pure helper — builds public Storage URL without instantiating a Supabase client.
+// Safe even if env vars missing at runtime in the bundle (will produce a broken URL but won't crash render).
+function getPublicUrl(path: string): string {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '') || ''
+  return `${base}/storage/v1/object/public/visit-photos/${encodeURIComponent(path)}`
+}
+
 export default function KeepsakeViewer() {
   const params = useParams<{ visitId: string }>()
   const visitId = params.visitId
@@ -14,12 +21,11 @@ export default function KeepsakeViewer() {
   const [error, setError] = useState<string | null>(null)
   const [showQR, setShowQR] = useState(false)
 
-  const supabase = createClient()
-
   useEffect(() => {
     async function loadPublicKeepsake() {
       if (!visitId) return
 
+      const supabase = createClient()
       const { data, error } = await supabase
         .from('visit_reports')
         .select(`
@@ -88,10 +94,7 @@ export default function KeepsakeViewer() {
       }),
       reflection: report.reflection_text,
       tributeLeft: report.tribute_left,
-      photoUrls: (report.photo_urls || []).map((path: string) => {
-        const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
-        return data.publicUrl
-      }),
+      photoUrls: (report.photo_urls || []).map((path: string) => getPublicUrl(path)),
       qrUrl: qrDataUrl,
       graveLocation,
     })
@@ -229,11 +232,11 @@ export default function KeepsakeViewer() {
                 <div className="honor-label mb-3">Photos from the visit</div>
                 <div className="grid grid-cols-2 gap-4">
                   {report.photo_urls.map((path: string, idx: number) => {
-                    const { data } = supabase.storage.from('visit-photos').getPublicUrl(path)
+                    const publicUrl = getPublicUrl(path)
                     return (
-                      <a key={idx} href={data.publicUrl} target="_blank" rel="noopener noreferrer">
+                      <a key={idx} href={publicUrl} target="_blank" rel="noopener noreferrer">
                         <img 
-                          src={data.publicUrl} 
+                          src={publicUrl} 
                           alt={`Photo ${idx + 1}`} 
                           className="honor-photo w-full aspect-[4/3] object-cover" 
                         />
