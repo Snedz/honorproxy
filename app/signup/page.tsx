@@ -33,7 +33,11 @@ export default function SignupPage() {
     })
 
     if (error) {
-      setError(error.message)
+      let displayError = error.message
+      if (displayError.toLowerCase().includes('invalid api key') || displayError.toLowerCase().includes('not configured') || displayError.toLowerCase().includes('invalid')) {
+        displayError += ' — Verify NEXT_PUBLIC_SUPABASE_ANON_KEY is the correct "anon" "public" key (not service_role) from your Supabase project\'s API settings, and that it was set for Production in Vercel before the last build. Then redeploy.'
+      }
+      setError(displayError)
     } else {
       setMessage("Account created. Please check your email to confirm your account, then sign in.")
     }

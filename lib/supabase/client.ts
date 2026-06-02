@@ -1,13 +1,13 @@
 import { createBrowserClient } from '@supabase/ssr'
 import { Database } from './database.types'
 
-// Temporary stub client used only when the build is missing the Supabase env vars.
+// Temporary stub client used only when the build is missing/invalid the Supabase env vars.
 // This prevents hard crashes, unhandled promise rejections, and error boundaries
 // while the user sets the variables and redeploys. All data operations return
 // empty/safe results. Auth operations surface a clear error if the user tries to
 // sign in/up before the redeploy.
-function createStubClient(): any {
-  const configError = { message: 'Supabase not configured in this build. Set NEXT_PUBLIC_SUPABASE_* in Vercel (Production) and redeploy.' }
+function createStubClient(customMessage?: string): any {
+  const configError = { message: customMessage || 'Supabase not configured in this build. Set NEXT_PUBLIC_SUPABASE_* in Vercel (Production) and redeploy.' }
 
   const emptyData = { data: [], error: null, count: 0 }
   const nullData = { data: null, error: null }
@@ -93,6 +93,24 @@ export function createClient() {
     // and allows the page to render its static/public content. Dynamic parts (lists,
     // auth state, forms that need DB) will simply show empty or disabled states.
     return createStubClient()
+  }
+
+  // Basic runtime sanity check on the inlined values (catches wrong key copied, e.g. service_role instead of anon,
+  // or key from wrong Supabase project, or truncated value). This turns "Invalid API key" from Supabase
+  // into a clear actionable message and prevents the bad key from being sent.
+  const looksLikeValidSupabase = supabaseUrl.includes('.supabase.co') &&
+    supabaseKey.startsWith('eyJ') &&
+    supabaseKey.length > 100;  // anon keys are long JWTs
+
+  if (!looksLikeValidSupabase) {
+    if (!(globalThis as any).__honorproxy_supabase_config_logged) {
+      ;(globalThis as any).__honorproxy_supabase_config_logged = true
+      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY in this build looks invalid. ' +
+        'Common causes: copied the wrong key (must be the "anon" "public" key, NOT service_role), key from a different Supabase project, or truncated when pasting. ' +
+        'Fix in Vercel Project Settings → Environment Variables (Production), then redeploy.'
+      console.error(msg)
+    }
+    return createStubClient('Supabase configuration in this build is invalid (bad API key or URL). Check that NEXT_PUBLIC_SUPABASE_ANON_KEY is exactly the "anon public" key matching your Supabase project URL, for the Production environment in Vercel, then redeploy.')
   }
 
   return createBrowserClient<Database>(supabaseUrl, supabaseKey)
