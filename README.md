@@ -92,8 +92,9 @@ HonorProxy is designed to deploy easily on Vercel.
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `RESEND_API_KEY`
    - `RESEND_FROM_EMAIL` (strongly recommended once you have a verified domain)
+   **Important**: When adding/editing in Vercel, select the **Production** environment (and Preview if you test previews). NEXT_PUBLIC_* vars are baked into the client JS bundle at build time.
 4. Run any pending Supabase migrations in your production Supabase project.
-5. Deploy.
+5. Deploy (or Redeploy after changing env vars). Every env change or code push requires a fresh production build for the custom domain and client features (auth, forms, lists) to use the real Supabase connection.
 
 The application already uses strict Row Level Security policies. There is no separate “admin” surface — the review queue is simply a protected page available to anyone with a verified account who has been granted access.
 
