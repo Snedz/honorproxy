@@ -14,17 +14,32 @@ export default function RequestPage() {
   // Supabase client created only after mount (safe for static prerender of this page)
 
   useEffect(() => {
-    const supabase = createClient()
+    let supabase: ReturnType<typeof createClient> | null = null
+    try {
+      supabase = createClient()
+    } catch (err) {
+      console.warn('[Request] Supabase client init failed (will show sign-in gate):', err)
+      setLoading(false)
+      return
+    }
+
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       setLoading(false)
+    }).catch(() => {
+      setLoading(false)
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const authChange = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })
+    const subscription = (authChange as any)?.data?.subscription
 
-    return () => subscription.unsubscribe()
+    return () => {
+      if (subscription?.unsubscribe) {
+        try { subscription.unsubscribe() } catch {}
+      }
+    }
   }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -38,59 +53,64 @@ export default function RequestPage() {
     const formData = new FormData(form)
 
     const cemeterySlug = formData.get('cemetery') as string
-    const client = createClient()
 
-    const { data: cemeteries, error: cemError } = await client
-      .from('cemeteries')
-      .select('id, slug, name')
-      .in('slug', ['arlington', 'fort-snelling', 'golden-gate', 'quantico'])
+    try {
+      const client = createClient()
 
-    console.log('[Request] Cemeteries query result:', { cemeteries, cemError })
+      const { data: cemeteries, error: cemError } = await client
+        .from('cemeteries')
+        .select('id, slug, name')
+        .in('slug', ['arlington', 'fort-snelling', 'golden-gate', 'quantico'])
 
-    if (cemError) {
-      setError("Error loading cemeteries: " + cemError.message)
-      setSubmitting(false)
-      return
-    }
+      console.log('[Request] Cemeteries query result:', { cemeteries, cemError })
 
-    if (!cemeteries || cemeteries.length === 0) {
-      setError("No cemeteries found in the database. The table may be empty or permissions are missing.")
-      setSubmitting(false)
-      return
-    }
+      if (cemError) {
+        setError("Error loading cemeteries: " + cemError.message)
+        setSubmitting(false)
+        return
+      }
 
-    type CemeteryRow = { id: string; slug: string; name: string }
-    const selectedCemetery = (cemeteries as CemeteryRow[]).find((c) => c.slug === cemeterySlug)
-    if (!selectedCemetery) {
-      setError(`Cemetery with slug "${cemeterySlug}" not found in results. Found: ${(cemeteries as CemeteryRow[]).map((c) => c.slug).join(', ')}`)
-      setSubmitting(false)
-      return
-    }
+      if (!cemeteries || cemeteries.length === 0) {
+        setError("No cemeteries found in the database. The table may be empty or permissions are missing. (Is the build using real Supabase keys?)")
+        setSubmitting(false)
+        return
+      }
 
-    // Reuse the client created above for the cemeteries query
-    // Get the current user's email so we can store it directly on the request
-    const { data: { user: authUser } } = await client.auth.getUser()
+      type CemeteryRow = { id: string; slug: string; name: string }
+      const selectedCemetery = (cemeteries as CemeteryRow[]).find((c) => c.slug === cemeterySlug)
+      if (!selectedCemetery) {
+        setError(`Cemetery with slug "${cemeterySlug}" not found in results. Found: ${(cemeteries as CemeteryRow[]).map((c) => c.slug).join(', ')}`)
+        setSubmitting(false)
+        return
+      }
 
-    const { error: insertError } = await (client.from('grave_requests') as any)
-      .insert({
-        requester_id: user.id,
-        requester_email: authUser?.email || null,
-        cemetery_id: selectedCemetery.id,
-        deceased_full_name: formData.get('deceased_full_name') as string,
-        section: (formData.get('section') as string) || null,
-        grave_number: (formData.get('grave_number') as string) || null,
-        plot_info: (formData.get('plot_info') as string) || null,
-        personal_message: (formData.get('personal_message') as string) || null,
-        relationship_to_deceased: (formData.get('relationship') as string) || null,
-        status: 'open',
-      })
+      // Get the current user's email so we can store it directly on the request
+      const { data: { user: authUser } } = await client.auth.getUser()
 
-    if (insertError) {
-      console.error(insertError)
-      setError("Something went wrong. Please try again.")
-    } else {
-      setSuccess(true)
-      form.reset()
+      const { error: insertError } = await (client.from('grave_requests') as any)
+        .insert({
+          requester_id: user.id,
+          requester_email: authUser?.email || null,
+          cemetery_id: selectedCemetery.id,
+          deceased_full_name: formData.get('deceased_full_name') as string,
+          section: (formData.get('section') as string) || null,
+          grave_number: (formData.get('grave_number') as string) || null,
+          plot_info: (formData.get('plot_info') as string) || null,
+          personal_message: (formData.get('personal_message') as string) || null,
+          relationship_to_deceased: (formData.get('relationship') as string) || null,
+          status: 'open',
+        })
+
+      if (insertError) {
+        console.error(insertError)
+        setError("Something went wrong. Please try again.")
+      } else {
+        setSuccess(true)
+        form.reset()
+      }
+    } catch (err: any) {
+      console.error('[Request] submit error:', err)
+      setError(err?.message || "Something went wrong submitting the request. Check console and ensure Supabase env vars are set in Vercel Production, then redeploy.")
     }
 
     setSubmitting(false)
