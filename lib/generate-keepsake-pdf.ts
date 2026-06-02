@@ -28,9 +28,14 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   doc.text('HONORPROXY', pageWidth / 2, y, { align: 'center' })
   y += 20
 
+  // Subtle red accent line for remembrance theme
+  doc.setDrawColor(140, 47, 47)
+  doc.line(margin + 80, y, pageWidth - margin - 80, y)
+  y += 8
+
   doc.setDrawColor(200)
   doc.line(margin, y, pageWidth - margin, y)
-  y += 30
+  y += 25
 
   // Title
   doc.setFontSize(18)
@@ -40,7 +45,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
 
   // For
   doc.setFontSize(11)
-  doc.setTextColor(90)
+  doc.setTextColor(140, 47, 47) // remembrance red
   doc.text('FOR', margin, y)
   y += 16
   doc.setFontSize(16)
@@ -50,7 +55,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
 
   // Location & Date
   doc.setFontSize(11)
-  doc.setTextColor(90)
+  doc.setTextColor(140, 47, 47)
   doc.text('AT', margin, y)
   y += 16
   doc.setFontSize(13)
@@ -59,7 +64,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   y += 20
 
   doc.setFontSize(11)
-  doc.setTextColor(90)
+  doc.setTextColor(140, 47, 47)
   doc.text('ON', margin, y)
   y += 16
   doc.setFontSize(13)
@@ -69,7 +74,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
 
   if (data.graveLocation) {
     doc.setFontSize(11)
-    doc.setTextColor(90)
+    doc.setTextColor(140, 47, 47)
     doc.text('GRAVE LOCATION', margin, y)
     y += 16
     doc.setFontSize(13)
@@ -81,7 +86,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
   // Tribute
   if (data.tributeLeft) {
     doc.setFontSize(11)
-    doc.setTextColor(90)
+    doc.setTextColor(140, 47, 47)
     doc.text('TRIBUTE LEFT', margin, y)
     y += 16
     doc.setFontSize(13)
@@ -92,7 +97,7 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
 
   // Reflection
   doc.setFontSize(11)
-  doc.setTextColor(90)
+  doc.setTextColor(140, 47, 47)
   doc.text('WHAT THE VISITOR WROTE', margin, y)
   y += 18
 
@@ -154,6 +159,12 @@ export async function downloadKeepsakePdf(data: KeepsakePdfData) {
       // QR failed to load — skip
     }
   }
+
+  // Subtle red closing rule for solemnity
+  y += 10
+  doc.setDrawColor(140, 47, 47)
+  doc.line(margin + 100, y, pageWidth - margin - 100, y)
+  y += 15
 
   // Footer
   doc.setFontSize(9)

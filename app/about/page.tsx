@@ -98,9 +98,9 @@ export default function AboutPage() {
         <p className="mt-8 text-xs tracking-widest text-[#7a838e]">
           HONORPROXY — A respectful, mission-driven project
         </p>
-        <p className="mt-4 text-[10px] text-[#7a838e] max-w-prose mx-auto">
-          Our visitors act with reverence. They may offer personal words of remembrance or prayer at the grave according to their own tradition and the wishes of the family.
-        </p>
+        <div className="mt-6 mx-auto max-w-prose text-[10px] text-[#7a838e] border border-[#d8d2c6] rounded-xl p-4 bg-white/50">
+          Our visitors act with quiet reverence on sacred ground. They may offer personal words of remembrance or a prayer at the grave according to their own tradition and the wishes of the family. The service itself remains inclusive and focused on human presence and honor for all who served.
+        </div>
       </div>
     </div>
   )

@@ -587,6 +587,7 @@ export default function VisitPage() {
                           required
                         />
                         <p className="text-xs text-[#7a838e] mt-1.5">A few heartfelt sentences are enough. Keep it personal and true.</p>
+                        <p className="text-[10px] text-[#8c2f2f] mt-1">You may include a short prayer or simply your reflections — whatever feels right to offer at the grave.</p>
                       </div>
 
                       <div>

@@ -55,15 +55,23 @@ export default function Header() {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
 
   // Prefer the full_name we collect at signup (user_metadata), fall back to email local-part.
-  // This fixes ugly displays like "5n0wd3nz3ng".
+  // This fixes ugly displays like "5n0wd3nz3ng". Show first name primarily; use initials for very long.
   const displayName = (() => {
     const metaName = (user?.user_metadata?.full_name as string | undefined)?.trim()
-    if (metaName) return metaName.split(/\s+/)[0]
+    if (metaName) {
+      const parts = metaName.split(/\s+/)
+      const first = parts[0]
+      if (parts.length > 1) {
+        const lastInitial = parts[parts.length - 1][0]?.toUpperCase() || ''
+        return `${first} ${lastInitial}.`
+      }
+      return first
+    }
     const emailLocal = user?.email?.split('@')[0]
     return emailLocal || ''
   })()
 
-  const shortName = displayName.length > 14 ? displayName.slice(0, 11) + '…' : displayName
+  const shortName = displayName.length > 16 ? displayName.slice(0, 13) + '…' : displayName
 
   // Close menus when navigating (simple)
   function closeMenus() {
@@ -100,12 +108,13 @@ export default function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-2 rounded-full border border-[#d8d2c6] bg-white/60 pl-3 pr-2.5 py-1 text-[#5c656f] hover:text-[#1c252f] hover:bg-white transition-colors text-xs"
+                    className="flex items-center gap-1.5 rounded-full border border-[#d8d2c6] bg-white/60 pl-2.5 pr-2 py-0.5 text-[#5c656f] hover:text-[#1c252f] hover:bg-white hover:border-[#8c2f2f]/30 transition-colors text-xs"
                     aria-expanded={userMenuOpen}
                     aria-haspopup="true"
+                    title={displayName}
                   >
                     <span className="font-medium tracking-tight">{shortName}</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
                   </button>
 
                   {userMenuOpen && (

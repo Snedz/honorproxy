@@ -254,6 +254,7 @@ export default function RemembrancesPage() {
                     <p className="honor-quote text-[15px] text-[#2a3138]">
                       “{shortReflection}”
                     </p>
+                    <div className="mt-1 text-[9px] text-[#8a7754] tracking-[1px]">OFFERED WITH REVERENCE</div>
                     <div className="mt-4 text-xs text-[#8a7754] tracking-widest">
                       VIEW THE FULL KEEPSAKE →
                     </div>
