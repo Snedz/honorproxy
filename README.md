@@ -93,7 +93,7 @@ Manual alternative (if you prefer or for initial setup):
 2. Import the project in Vercel.
 3. Add the required environment variables (see `.env.local.example`):
    - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`  (must be the **anon** **public** key from Supabase, *not* the service_role secret key)
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`  (must be the **full** **anon public** key or publishable key from Supabase / the integration's SUPABASE_ANON_KEY or SUPABASE_PUBLISHABLE_KEY -- copy the complete long value, never service_role)
    - `RESEND_API_KEY`
    - `RESEND_FROM_EMAIL` (strongly recommended once you have a verified domain)
    **Important**: When adding/editing in Vercel, select the **Production** environment (and Preview if you test previews). NEXT_PUBLIC_* vars are baked into the client JS bundle at build time.
