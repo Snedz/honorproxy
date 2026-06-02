@@ -46,7 +46,6 @@ export async function createClient() {
   // Support both common naming conventions (see client.ts for details)
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    process.env.SUPABASE_URL ||
     process.env.SUPABASE_URL
 
   const supabaseKey =

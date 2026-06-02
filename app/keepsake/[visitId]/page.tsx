@@ -6,10 +6,17 @@ export async function generateMetadata({ params }: { params: Promise<{ visitId: 
   const { visitId } = await params
 
   try {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY
+
+    if (!url || !key) {
+      return {
+        title: 'Keepsake • HonorProxy',
+        description: 'A quiet act of remembrance.',
+      }
+    }
+
+    const supabase = createClient(url, key)
 
     const { data } = await supabase
       .from('visit_reports')
