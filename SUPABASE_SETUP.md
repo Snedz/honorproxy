@@ -77,3 +77,31 @@ In the dashboard:
 4. Quantico National Cemetery (Virginia)
 
 The schema uses a `cemetery_slug` for easy routing and future expansion to any cemetery on Earth or beyond.
+
+## 8. Recommended: Supabase Vercel + GitHub Integrations (for easy env vars & previews)
+
+Now that your project is on GitHub and deployed to Vercel, connect the official integrations in the Supabase dashboard. This is the easiest and most reliable way to keep Supabase keys in sync with Vercel (especially for Production + Preview deployments) and enables powerful GitHub-based workflows.
+
+1. In Supabase dashboard (your honorproxy project) → **Integrations** (in the left sidebar).
+2. **Vercel**:
+   - Click "Connect" / Install.
+   - Authorize Supabase to access your Vercel account/teams.
+   - Select your `honorproxy` Vercel project.
+   - Link it. Supabase will automatically inject the correct environment variables into Vercel:
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY` (for server-side use)
+   - For preview deployments (Vercel previews on PRs), you can enable "Supabase Previews" so each preview gets its own temporary Supabase project (great for testing without affecting prod data).
+3. **GitHub**:
+   - Connect your `Snedz/honorproxy` repository.
+   - This enables Supabase's Git integration (branching, running migrations from your repo, preview databases tied to Git branches, etc.).
+   - Useful if you want to manage schema changes via pull requests in the future.
+
+After connecting:
+- Go back to your Vercel project → Settings → Environment Variables. You should now see the Supabase vars populated (or updated) for Production (and Previews if enabled).
+- **Redeploy** your latest commit in Vercel (or push a small change) so the client bundle picks up the fresh keys.
+- Hard-refresh the live site (especially signup / request / login flows).
+
+This integration approach is now the recommended path over manually copying keys (as described earlier in this guide). It reduces "Invalid API key" / missing env var problems dramatically.
+
+If you already had manual keys, the integration will usually overwrite/sync them cleanly.

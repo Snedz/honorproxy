@@ -43,32 +43,46 @@ function createServerStub(customMessage?: string): any {
 export async function createClient() {
   const cookieStore = await cookies()
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Support both common naming conventions (see client.ts for details)
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    process.env.SUPABASE_URL
+
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_KEY
 
   if (!supabaseUrl || !supabaseKey) {
     if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_server_config_logged = true
-      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing at server runtime. ' +
-        'Set the environment variables in Vercel (Production + Preview) and redeploy.'
+      const msg =
+        '[Supabase] NEXT_PUBLIC_SUPABASE_URL / SUPABASE_URL or the anon key is missing at server runtime. ' +
+        'Set the environment variables in Vercel (Production + Preview) and redeploy. ' +
+        'Easiest: In Supabase dashboard → Integrations, connect Vercel and link your project.'
       console.error(msg)
     }
     return createServerStub()
   }
 
   // Basic sanity check (same as client)
-  const looksLikeValidSupabase = supabaseUrl.includes('.supabase.co') &&
+  const looksLikeValidSupabase =
+    supabaseUrl.includes('.supabase.co') &&
     supabaseKey.startsWith('eyJ') &&
-    supabaseKey.length > 100;
+    supabaseKey.length > 100
 
   if (!looksLikeValidSupabase) {
     if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_server_config_logged = true
-      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY at server runtime looks invalid. ' +
+      const msg =
+        '[Supabase] Supabase URL or ANON_KEY at server runtime looks invalid. ' +
         'Check that the values set in Vercel (Production) are correct (anon key, matching project). Redeploy after fixing.'
       console.error(msg)
     }
-    return createServerStub('Supabase configuration at server runtime is invalid (bad API key or URL). Verify env vars in Vercel and redeploy.')
+    return createServerStub(
+      'Supabase configuration at server runtime is invalid (bad API key or URL). Re-link via Supabase Integrations → Vercel if you installed it, then redeploy.'
+    )
   }
 
   return createServerClient<Database>(

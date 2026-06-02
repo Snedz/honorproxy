@@ -85,6 +85,10 @@ This small detail makes a real difference in how seriously families receive the 
 
 HonorProxy is designed to deploy easily on Vercel.
 
+**Preferred way (recommended):** Use Supabase's official Vercel + GitHub integrations (see `SUPABASE_SETUP.md` section 8 for step-by-step). This automatically keeps your Supabase keys in sync with Vercel (Production + Previews) and is the easiest way to avoid "Invalid API key" / missing env var issues.
+
+Manual alternative (if you prefer or for initial setup):
+
 1. Push the repository to GitHub.
 2. Import the project in Vercel.
 3. Add the required environment variables (see `.env.local.example`):

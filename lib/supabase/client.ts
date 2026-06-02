@@ -76,17 +76,28 @@ function createStubClient(customMessage?: string): any {
 }
 
 export function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Support both common naming conventions:
+  // - NEXT_PUBLIC_* (recommended for Next.js client bundles, what our .env.example and most templates use)
+  // - Plain SUPABASE_* (what Supabase's official Vercel integration often injects)
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL
+
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_KEY
 
   if (!supabaseUrl || !supabaseKey) {
     // Log only once per page load / module to avoid spamming the console on every component
     // that needs Supabase while the user is still fixing the Vercel configuration.
     if (!(globalThis as any).__honorproxy_supabase_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_config_logged = true
-      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing in the client bundle. ' +
+      const msg =
+        '[Supabase] NEXT_PUBLIC_SUPABASE_URL / SUPABASE_URL or the anon key is missing in the client bundle. ' +
         'This usually means the Vercel environment variables were not set (or not set for Production) at the time of the last build. ' +
-        'Set them in Project Settings → Environment Variables (Production), then redeploy.'
+        'Easiest fix: In the Supabase dashboard go to Integrations → Vercel, connect and link your honorproxy Vercel project (and GitHub). Then redeploy.'
       console.error(msg)
     }
     // Return a stub instead of throwing. This eliminates unhandled promise rejections
@@ -98,19 +109,23 @@ export function createClient() {
   // Basic runtime sanity check on the inlined values (catches wrong key copied, e.g. service_role instead of anon,
   // or key from wrong Supabase project, or truncated value). This turns "Invalid API key" from Supabase
   // into a clear actionable message and prevents the bad key from being sent.
-  const looksLikeValidSupabase = supabaseUrl.includes('.supabase.co') &&
+  const looksLikeValidSupabase =
+    supabaseUrl.includes('.supabase.co') &&
     supabaseKey.startsWith('eyJ') &&
-    supabaseKey.length > 100;  // anon keys are long JWTs
+    supabaseKey.length > 100 // anon keys are long JWTs
 
   if (!looksLikeValidSupabase) {
     if (!(globalThis as any).__honorproxy_supabase_config_logged) {
       ;(globalThis as any).__honorproxy_supabase_config_logged = true
-      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY in this build looks invalid. ' +
+      const msg =
+        '[Supabase] Supabase URL or ANON_KEY in this build looks invalid. ' +
         'Common causes: copied the wrong key (must be the "anon" "public" key, NOT service_role), key from a different Supabase project, or truncated when pasting. ' +
         'Fix in Vercel Project Settings → Environment Variables (Production), then redeploy.'
       console.error(msg)
     }
-    return createStubClient('Supabase configuration in this build is invalid (bad API key or URL). Check that NEXT_PUBLIC_SUPABASE_ANON_KEY is exactly the "anon public" key matching your Supabase project URL, for the Production environment in Vercel, then redeploy.')
+    return createStubClient(
+      'Supabase configuration in this build is invalid (bad API key or URL). Make sure you are using the "anon public" key (never service_role). If you just installed the Supabase Vercel integration, go back to it, re-link your Vercel project, then redeploy in Vercel.'
+    )
   }
 
   return createBrowserClient<Database>(supabaseUrl, supabaseKey)
