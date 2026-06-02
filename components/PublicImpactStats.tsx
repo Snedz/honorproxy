@@ -8,39 +8,44 @@ export default function PublicImpactStats() {
 
   useEffect(() => {
     async function fetchStats() {
-      // Create client inside the effect so it only runs in the browser after mount.
-      // Prevents build/prerender crashes on statically generated pages (homepage, remembrances).
-      const supabase = createClient()
+      try {
+        // Create client inside the effect so it only runs in the browser after mount.
+        const supabase = createClient()
 
-      // Count public visits
-      const { count: totalVisits } = await supabase
-        .from('visit_reports')
-        .select('*', { count: 'exact', head: true })
-        .eq('is_public', true)
+        // Count public visits
+        const { count: totalVisits } = await supabase
+          .from('visit_reports')
+          .select('*', { count: 'exact', head: true })
+          .eq('is_public', true)
 
-      // Count distinct cemeteries with public visits
-      const { data: cemeteriesData } = await supabase
-        .from('visit_reports')
-        .select(`
-          visits!inner (
-            grave_requests!inner (
-              cemeteries!inner (name)
+        // Count distinct cemeteries with public visits
+        const { data: cemeteriesData } = await supabase
+          .from('visit_reports')
+          .select(`
+            visits!inner (
+              grave_requests!inner (
+                cemeteries!inner (name)
+              )
             )
-          )
-        `)
-        .eq('is_public', true)
+          `)
+          .eq('is_public', true)
 
-      const uniqueCemeteries = new Set(
-        (cemeteriesData || [])
-          .map((r: any) => r.visits?.grave_requests?.cemeteries?.name)
-          .filter(Boolean)
-      )
+        const uniqueCemeteries = new Set(
+          (cemeteriesData || [])
+            .map((r: any) => r.visits?.grave_requests?.cemeteries?.name)
+            .filter(Boolean)
+        )
 
-      const visits = totalVisits || 0
-      const cemeteries = uniqueCemeteries.size
+        const visits = totalVisits || 0
+        const cemeteries = uniqueCemeteries.size
 
-      if (visits > 0) {
-        setStats({ visits, cemeteries })
+        if (visits > 0) {
+          setStats({ visits, cemeteries })
+        }
+      } catch (err) {
+        // Non-fatal: if Supabase not configured or query fails (e.g. RLS for anon, missing column),
+        // just don't show the stats banner. The rest of the page works.
+        console.warn('[PublicImpactStats] Could not load stats (non-fatal):', err)
       }
     }
 

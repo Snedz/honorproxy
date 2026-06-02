@@ -10,9 +10,15 @@ export default function Header() {
 
   useEffect(() => {
     // Create the Supabase browser client only in the browser, after mount.
-    // This prevents crashes during static prerendering (e.g. /_not-found, homepage)
-    // when NEXT_PUBLIC_SUPABASE_* env vars are not yet available in the build context.
-    const supabase = createClient()
+    // Guarded so a missing env in the client bundle doesn't break the whole UI.
+    let supabase: ReturnType<typeof createClient> | null = null
+    try {
+      supabase = createClient()
+    } catch (err) {
+      console.warn('[Header] Supabase client unavailable (likely missing env in this build):', err)
+      setLoading(false)
+      return
+    }
 
     // Get initial user
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -33,9 +39,13 @@ export default function Header() {
   }, [])
 
   async function handleSignOut() {
-    // Create client locally when the action is actually triggered (client-side only)
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    try {
+      // Create client locally when the action is actually triggered (client-side only)
+      const supabase = createClient()
+      await supabase.auth.signOut()
+    } catch (err) {
+      console.warn('[Header] signOut failed (non-fatal):', err)
+    }
     // Refresh to clear any server-side state if needed
     window.location.href = '/'
   }
