@@ -125,7 +125,7 @@ export default function MyKeepsakesPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-[#1c252f]">Sign in to view your keepsakes</h1>
         <div className="mt-6 flex gap-4 justify-center">
           <a href="/login" className="rounded-full border border-[#d8d2c6] px-6 py-2.5 text-sm hover:bg-white">Sign in</a>
-          <a href="/signup" className="rounded-full bg-[#1c252f] px-6 py-2.5 text-sm text-white">Create account</a>
+          <a href="/signup" className="rounded-full bg-[#8c2f2f] px-6 py-2.5 text-sm text-white hover:bg-[#6f2323]">Create account</a>
         </div>
       </div>
     )
@@ -147,7 +147,7 @@ export default function MyKeepsakesPage() {
       {visits.length === 0 ? (
         <div className="honor-card p-12 text-center">
           <p className="text-[#5c656f] mb-6">You haven’t completed any visits yet.</p>
-          <a href="/visit" className="rounded-full bg-[#1c252f] px-8 py-3 text-sm font-medium text-white">
+          <a href="/visit" className="rounded-full bg-[#8c2f2f] px-8 py-3 text-sm font-medium text-white hover:bg-[#6f2323]">
             Browse open requests
           </a>
         </div>
@@ -170,7 +170,7 @@ export default function MyKeepsakesPage() {
                   <div className="flex gap-2 self-start">
                     <a
                       href={`/visit/keepsake/${visit.id}`}
-                      className="rounded-full bg-[#1c252f] px-5 py-1.5 text-xs font-medium text-white hover:bg-black transition"
+                      className="rounded-full bg-[#8c2f2f] px-5 py-1.5 text-xs font-medium text-white hover:bg-[#6f2323] transition"
                     >
                       Open keepsake
                     </a>

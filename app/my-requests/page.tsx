@@ -113,7 +113,7 @@ export default function MyRequestsPage() {
       <div className="max-w-md mx-auto px-6 py-16 text-center">
         <h1 className="text-2xl font-semibold text-[#1c252f]">Please sign in</h1>
         <p className="mt-2 text-[#4a5563]">You need to be logged in to view your requests.</p>
-        <a href="/login" className="mt-6 inline-block rounded-full bg-[#1c252f] px-6 py-2.5 text-white text-sm">Sign in</a>
+        <a href="/login" className="mt-6 inline-block rounded-full bg-[#8c2f2f] px-6 py-2.5 text-white text-sm hover:bg-[#6f2323]">Sign in</a>
       </div>
     )
   }
@@ -131,7 +131,7 @@ export default function MyRequestsPage() {
       {requests.length === 0 ? (
         <div className="honor-card p-12 text-center">
           <p className="text-[#5c656f]">You haven’t submitted any requests yet.</p>
-          <a href="/request" className="mt-6 inline-block rounded-full bg-[#1c252f] px-6 py-2.5 text-sm font-medium text-white">Make your first request</a>
+          <a href="/request" className="mt-6 inline-block rounded-full bg-[#8c2f2f] px-6 py-2.5 text-sm font-medium text-white hover:bg-[#6f2323]">Make your first request</a>
         </div>
       ) : (
         <div className="space-y-6">

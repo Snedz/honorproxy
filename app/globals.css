@@ -13,6 +13,10 @@
   --honor-border: #d8d2c6;
   --honor-sage: #4a5c4f;
   --honor-gold: #8a7754;
+
+  /* Remembrance red — dignified accent for actions, CTAs, and emphasis (poppy / valor feel without being loud) */
+  --honor-red: #8c2f2f;
+  --honor-red-dark: #6f2323;
 }
 
 @theme inline {

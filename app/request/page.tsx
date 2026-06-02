@@ -142,7 +142,7 @@ export default function RequestPage() {
         <div className="mt-9 flex flex-col gap-3">
           <a 
             href="/signup" 
-            className="rounded-full bg-[#1c252f] py-3.5 text-white font-medium tracking-tight"
+            className="rounded-full bg-[#8c2f2f] py-3.5 text-white font-medium tracking-tight hover:bg-[#6f2323]"
           >
             Create an account
           </a>
@@ -179,7 +179,7 @@ export default function RequestPage() {
           <a href="/my-requests" className="rounded-full border border-[#d8d2c6] px-7 py-2.5 text-sm font-medium hover:bg-white">
             View my requests
           </a>
-          <a href="/" className="rounded-full bg-[#1c252f] px-7 py-2.5 text-sm font-medium text-white">
+          <a href="/" className="rounded-full bg-[#8c2f2f] px-7 py-2.5 text-sm font-medium text-white hover:bg-[#6f2323]">
             Return home
           </a>
         </div>
@@ -297,7 +297,7 @@ export default function RequestPage() {
         <button 
           type="submit" 
           disabled={submitting}
-          className="w-full rounded-full bg-[#1c252f] py-4 text-base font-medium text-white disabled:opacity-60 active:scale-[0.985] transition-colors tracking-tight"
+          className="w-full rounded-full bg-[#8c2f2f] py-4 text-base font-medium text-white disabled:opacity-60 active:scale-[0.985] transition-colors tracking-tight hover:bg-[#6f2323]"
         >
           {submitting ? "Submitting your request..." : "Submit request"}
         </button>

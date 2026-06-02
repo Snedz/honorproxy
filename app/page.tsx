@@ -22,7 +22,7 @@ export default function HonorProxyHome() {
 
           <div className="mt-11 flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/request" 
-               className="inline-flex h-12 items-center justify-center rounded-full bg-[#1c252f] px-9 text-sm font-medium text-white hover:bg-black transition-colors">
+               className="inline-flex h-12 items-center justify-center rounded-full bg-[#8c2f2f] px-9 text-sm font-medium text-white hover:bg-[#6f2323] transition-colors">
               Request a proxy visit
             </a>
             <a href="/visit" 

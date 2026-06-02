@@ -260,7 +260,7 @@ export default function ReviewQueuePage() {
       <div className="max-w-md mx-auto px-6 py-16 text-center">
         <h1 className="text-3xl font-semibold tracking-tight text-[#1c252f]">Sign in to review reports</h1>
         <div className="mt-6">
-          <a href="/login" className="rounded-full bg-[#1c252f] px-6 py-2.5 text-sm text-white">Sign in</a>
+          <a href="/login" className="rounded-full bg-[#8c2f2f] px-6 py-2.5 text-sm text-white hover:bg-[#6f2323]">Sign in</a>
         </div>
       </div>
     )
@@ -342,7 +342,7 @@ export default function ReviewQueuePage() {
                     <button
                       onClick={() => approveReport(report)}
                       disabled={processingId === report.id}
-                      className="rounded-full bg-[#1c252f] px-5 py-1.5 text-xs font-medium text-white disabled:opacity-50 hover:bg-black transition"
+                      className="rounded-full bg-[#8c2f2f] px-5 py-1.5 text-xs font-medium text-white disabled:opacity-50 hover:bg-[#6f2323] transition"
                     >
                       {processingId === report.id ? 'Processing...' : 'Approve & Send'}
                     </button>

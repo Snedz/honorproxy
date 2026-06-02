@@ -369,7 +369,7 @@ export default function VisitPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-[#1c252f]">Sign in to offer visits</h1>
         <div className="mt-6 flex gap-4 justify-center">
           <a href="/login" className="rounded-full border border-[#d8d2c6] px-6 py-2.5 text-sm hover:bg-white">Sign in</a>
-          <a href="/signup" className="rounded-full bg-[#1c252f] px-6 py-2.5 text-sm text-white">Create account</a>
+          <a href="/signup" className="rounded-full bg-[#8c2f2f] px-6 py-2.5 text-sm text-white hover:bg-[#6f2323]">Create account</a>
         </div>
       </div>
     )
@@ -428,7 +428,7 @@ export default function VisitPage() {
             </button>
             <a
               href="#past-visits"
-              className="rounded-full bg-[#1c252f] px-6 py-2 text-sm font-medium text-white"
+              className="rounded-full bg-[#8c2f2f] px-6 py-2 text-sm font-medium text-white hover:bg-[#6f2323]"
             >
               View your past visits
             </a>
@@ -596,7 +596,7 @@ export default function VisitPage() {
                           multiple 
                           accept="image/*"
                           onChange={handlePhotoChange}
-                          className="block w-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[#1c252f] file:px-4 file:py-2 file:text-xs file:font-medium file:text-white"
+                          className="block w-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-[#8c2f2f] file:px-4 file:py-2 file:text-xs file:font-medium file:text-white hover:file:bg-[#6f2323]"
                         />
                         {reportForm.photos.length > 0 && (
                           <div className="text-xs text-[#5c656f] mt-1.5">{reportForm.photos.length} photo(s) selected</div>
@@ -672,7 +672,7 @@ export default function VisitPage() {
                   <button
                     onClick={() => handleClaim(req.id)}
                     disabled={claimingId === req.id}
-                    className="mt-2 md:mt-0 shrink-0 rounded-full bg-[#1c252f] px-7 py-2.5 text-sm font-medium text-white disabled:opacity-60 hover:bg-black transition-colors"
+                    className="mt-2 md:mt-0 shrink-0 rounded-full bg-[#8c2f2f] px-7 py-2.5 text-sm font-medium text-white disabled:opacity-60 hover:bg-[#6f2323] transition-colors"
                   >
                     {claimingId === req.id ? "Claiming..." : "Claim this request"}
                   </button>
