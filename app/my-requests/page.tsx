@@ -47,7 +47,7 @@ export default function MyRequestsPage() {
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.auth.getUser().then(({ data: { user } }: { data: { user: User | null } }) => {
       setUser(user)
       if (user) {
         loadRequests(user.id, supabase)
