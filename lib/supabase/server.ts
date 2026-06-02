@@ -5,8 +5,8 @@ import { Database } from './database.types'
 // Temporary stub for server when env vars are missing at runtime for this deployment.
 // Prevents 500s on server components / generateMetadata / route handlers while the
 // user configures the vars in Vercel and redeploys. Operations return empty results.
-function createServerStub(): any {
-  const configError = { message: 'Supabase not configured at server runtime for this deployment. Set env vars in Vercel (Production) and redeploy.' }
+function createServerStub(customMessage?: string): any {
+  const configError = { message: customMessage || 'Supabase not configured at server runtime for this deployment. Set env vars in Vercel (Production) and redeploy.' }
 
   const empty = { data: [], error: null }
   const nullish = { data: null, error: null }
@@ -54,6 +54,21 @@ export async function createClient() {
       console.error(msg)
     }
     return createServerStub()
+  }
+
+  // Basic sanity check (same as client)
+  const looksLikeValidSupabase = supabaseUrl.includes('.supabase.co') &&
+    supabaseKey.startsWith('eyJ') &&
+    supabaseKey.length > 100;
+
+  if (!looksLikeValidSupabase) {
+    if (!(globalThis as any).__honorproxy_supabase_server_config_logged) {
+      ;(globalThis as any).__honorproxy_supabase_server_config_logged = true
+      const msg = '[Supabase] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY at server runtime looks invalid. ' +
+        'Check that the values set in Vercel (Production) are correct (anon key, matching project). Redeploy after fixing.'
+      console.error(msg)
+    }
+    return createServerStub('Supabase configuration at server runtime is invalid (bad API key or URL). Verify env vars in Vercel and redeploy.')
   }
 
   return createServerClient<Database>(
