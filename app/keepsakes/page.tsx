@@ -136,9 +136,9 @@ export default function MyKeepsakesPage() {
       <div className="flex items-baseline justify-between mb-9">
         <div>
           <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">My Keepsakes</h1>
-          <p className="text-[#5c656f] mt-1.5">Your personal record of remembrance.</p>
+          <p className="text-[#5c656f] mt-1.5">Your personal record of prayer and remembrance.</p>
           <p className="text-sm text-[#5c656f] mt-1 mb-6 max-w-prose">
-            These are the quiet acts of remembrance you have carried out on behalf of families. Each one is a promise kept.
+            These are the acts of intercession and remembrance you have carried out on behalf of families. Each one is a promise kept before God.
           </p>
         </div>
         <a href="/visit" className="text-sm text-[#5c656f] hover:text-[#1c252f]">Offer another visit →</a>

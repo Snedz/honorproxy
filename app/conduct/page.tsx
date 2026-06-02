@@ -15,29 +15,29 @@ export default function ConductPage() {
         <div>
           <div className="honor-label mb-3">Core principles</div>
           <ul className="space-y-2 list-disc pl-5">
-            <li>Treat every request with the same respect you would want shown to your own family.</li>
-            <li>Follow all posted rules and guidelines of the specific cemetery.</li>
-            <li>Remain quiet, composed, and focused on the act of remembrance.</li>
-            <li>Never use a visit for personal, political, commercial, or religious promotion.</li>
+            <li>Treat every request with the same respect you would want shown to your own family, as an act of love offered before God.</li>
+            <li>Follow all posted rules and guidelines of the specific cemetery. Approach the grave as holy ground.</li>
+            <li>Remain quiet, composed, and focused on the sacred act of prayer and remembrance.</li>
+            <li>Never use a visit for personal, political, commercial, or sectarian promotion. The visit itself is an offering of prayer, not an occasion to preach or recruit.</li>
           </ul>
         </div>
 
         <div>
           <div className="honor-label mb-3">Photography and reporting</div>
           <ul className="space-y-2 list-disc pl-5">
-            <li>Take only the photos necessary to fulfill the specific request.</li>
+            <li>Take only the photos necessary to fulfill the specific request as a witness to your presence and prayers.</li>
             <li>Do not photograph other visitors, funeral services, or unrelated graves.</li>
-            <li>Deliver an honest, personal reflection written from the heart.</li>
-            <li>Photos and your written reflection are delivered privately to the family only.</li>
+            <li>Deliver an honest prayer or personal reflection written from the heart, as if speaking to the family in the presence of the dead.</li>
+            <li>Photos and your written prayer or reflection are delivered privately to the family only.</li>
           </ul>
         </div>
 
         <div>
           <div className="honor-label mb-3">Tributes and behavior on site</div>
           <ul className="space-y-2 list-disc pl-5">
-            <li>Leave only simple, appropriate tributes if the family has specifically requested one (a small flag, a single flower, etc.).</li>
-            <li>Do not leave anything permanent, political, commercial, or that could disturb other visitors.</li>
-            <li>Be mindful of other families who may be visiting at the same time.</li>
+            <li>Leave only simple, appropriate tributes if the family has specifically requested one (a small flag, a single flower, a prayer card, etc.).</li>
+            <li>Do not leave anything permanent, political, commercial, or that could disturb other visitors or the sacred quiet of the place.</li>
+            <li>Be mindful of other families who may be visiting at the same time, some of whom may be in prayer.</li>
           </ul>
         </div>
 
@@ -60,12 +60,12 @@ export default function ConductPage() {
         </div>
 
         <p className="mt-3 text-sm text-[#5c656f]">
-          These standards exist so that every visit remains a pure act of remembrance — never spectacle, never self-promotion, always service.
+          These standards exist so that every visit remains a pure act of prayer and remembrance — never spectacle, never self-promotion, always sacred service offered for the dead and the living.
         </p>
       </div>
 
       <div className="mt-12 pt-8 border-t border-[#d8d2c6] text-sm text-[#5c656f]">
-        HonorProxy is a mission-driven project. By participating as a visitor, you agree to uphold these standards of respect and care.
+        HonorProxy is a ministry of remembrance. By participating as a visitor, you agree to uphold these standards of sacred respect and prayerful care.
       </div>
 
       <div className="mt-8 flex flex-wrap gap-x-5 gap-y-1 text-sm">

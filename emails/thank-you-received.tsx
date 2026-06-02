@@ -63,7 +63,7 @@ export default function ThankYouReceivedEmail({
                 color: '#3f4852', 
                 lineHeight: '1.55'
               }}>
-                Your visit to {deceasedName} at {cemeteryName} was received with gratitude.
+                Your prayers and visit to {deceasedName} at {cemeteryName} were received with gratitude.
               </Text>
             </Section>
 
@@ -101,9 +101,9 @@ export default function ThankYouReceivedEmail({
               color: '#4a5563',
               lineHeight: '1.6'
             }}>
-              Your act of remembrance was received with gratitude.
+              Your act of prayer and remembrance was received with gratitude.
               <br /><br />
-              Thank you for standing in for someone who could not be there.
+              Thank you for standing in before God for someone who could not be there.
             </Section>
 
             <div style={{ textAlign: 'center', marginTop: '32px', fontSize: '10px', color: '#7a838e', letterSpacing: '1px' }}>

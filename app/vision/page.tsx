@@ -13,7 +13,7 @@ export default function VisionPage() {
         </div>
         <h1 className="text-5xl font-semibold tracking-[-2px] text-[#1c252f]">Architecture for the Long Term</h1>
         <p className="mt-4 text-xl text-[#3f4852] leading-tight">
-          Designed from the beginning to serve remembrance everywhere — and one day, beyond.
+          Designed from the beginning to serve prayerful remembrance for the faithful departed everywhere — and one day, beyond.
         </p>
       </div>
 
@@ -24,10 +24,10 @@ export default function VisionPage() {
             HonorProxy is built on a small set of unchanging principles. These guide every technical and human decision, especially as the service grows.
           </p>
           <ul className="mt-3 space-y-2 list-disc pl-5">
-            <li><strong>Reverence first.</strong> No feature, scale, or technology is worth compromising the quiet dignity of remembrance.</li>
-            <li><strong>Human at the center.</strong> Technology exists only to connect one person standing at a grave with another who cannot be there.</li>
-            <li><strong>Minimal data, maximum trust.</strong> We collect only what is necessary and share it only with the person who will actually stand at the grave.</li>
-            <li><strong>Designed for sovereignty.</strong> Families and communities should be able to take their data with them, or move it elsewhere, at any time.</li>
+            <li><strong>Reverence first.</strong> No feature, scale, or technology is worth compromising the sacred dignity of prayer and remembrance at the grave.</li>
+            <li><strong>Human intercession at the center.</strong> Technology exists only to connect one soul offering prayer at a grave with the family who cannot be there to pray themselves.</li>
+            <li><strong>Minimal data, maximum trust.</strong> We collect only what is necessary and share it only with the person who will actually stand at the grave in prayer.</li>
+            <li><strong>Designed for sovereignty.</strong> Families and communities should be able to take their record of remembrance with them, or move it elsewhere, at any time.</li>
           </ul>
         </div>
 
@@ -63,38 +63,38 @@ export default function VisionPage() {
         <div>
           <div className="honor-label mb-3">Cultural &amp; religious sensitivity</div>
           <p>
-            Different communities have very different relationships with death, memory, and who may visit a grave.
+            Different communities have very different relationships with death, the soul, and who may stand in prayer at a grave. Some traditions require a priest or specific rites; others welcome any faithful person who comes with respect.
           </p>
           <p className="mt-3">
-            The system is deliberately minimal so that local partners, cultural advisors, and communities themselves can shape how the service is offered in their context. No universal template will ever be imposed.
+            The system is deliberately minimal so that local partners, cultural advisors, and communities themselves can shape how the service is offered in their context. No universal template will ever be imposed. The core remains the same: a real person goes to the grave to pray and remember when the family cannot.
           </p>
         </div>
 
         <div>
           <div className="honor-label mb-3">Off-world memorials</div>
           <p>
-            One day, there will be graves and memorials on the Moon, on Mars, in orbit, and beyond.
+            One day, there will be graves and memorials on the Moon, on Mars, in orbit, and beyond. The souls of those who gave their lives in service of exploration will rest there too.
           </p>
           <p className="mt-3">
-            The same simple emotional need will exist: someone who cannot be physically present will want to know that a real person stood (or floated) there with care and respect.
+            The same simple spiritual need will exist: someone who cannot be physically present will want to know that a real person stood (or floated) there in prayer and remembrance before the Creator.
           </p>
           <p className="mt-3">
-            The core loop — request, trusted visitor, personal reflection, private delivery — is intentionally abstract enough to support this future without requiring fundamental redesign.
+            The core loop — entrusting a prayer, a trusted visitor offering intercession at the site, a record of the words spoken, private delivery — is intentionally abstract enough to support this future without requiring fundamental redesign.
           </p>
         </div>
 
         <div>
           <div className="honor-label mb-3">Technology as servant, not driver</div>
           <p>
-            Every technical decision is evaluated against a simple question: Does this help a real person stand at a grave with greater care, or does it primarily serve scale, convenience, or data collection?
+            Every technical decision is evaluated against a simple question: Does this help a real person stand at a grave in prayer with greater reverence, or does it primarily serve scale, convenience, or data collection?
           </p>
           <p className="mt-3">
-            The platform will always favor tools that disappear into the background so the human act of remembrance remains the clearest thing.
+            The platform will always favor tools that disappear into the background so the sacred act of prayer and remembrance before God remains the clearest thing.
           </p>
         </div>
 
         <p className="mt-3 text-sm text-[#5c656f]">
-          The public remembrances that exist today are the first quiet traces of this long journey — shared so that the promise of remembrance can reach further than any one of us could go alone.
+          The public remembrances that exist today are the first quiet traces of this long journey — shared so that the promise of prayer for the dead may reach further than any one of us could go alone, and that the memory of those who served may endure in the sight of the Lord.
         </p>
       </div>
 

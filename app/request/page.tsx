@@ -136,7 +136,7 @@ export default function RequestPage() {
         <div className="mx-auto h-12 w-12 rounded-full bg-[#e9e4d9] mb-6" />
         <h1 className="text-3xl font-semibold tracking-tighter text-[#1c252f]">Sign in to make a request</h1>
         <p className="mt-4 text-[#4a5563] leading-relaxed">
-          All requests are private. An account lets us deliver the visit report, photos, and reflection securely back to you.
+          All requests are private. An account lets us deliver the record of the prayers offered at the grave, the photographs, and the words spoken on holy ground securely back to you.
         </p>
 
         <div className="mt-9 flex flex-col gap-3">
@@ -170,10 +170,10 @@ export default function RequestPage() {
         </div>
         <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">Request received</h1>
         <p className="mt-5 text-[17px] leading-relaxed text-[#4a5563] max-w-prose mx-auto">
-          Thank you. When a visitor claims your request and stands at the grave, we will send you a private email with their photos and personal reflection.
+          Thank you. When a visitor claims your request and stands at the grave, they will offer prayer for the repose of the soul and for you. We will send you a private record of their intercession, the photographs, and the words they carried to that sacred place.
         </p>
         <p className="mt-3 text-xs text-[#7a838e]">
-          The visit report will be reviewed by a human before it reaches you, to ensure it carries the quiet respect this work deserves.
+          The report will be reviewed by a human before it reaches you, to ensure it carries the sacred dignity this work deserves.
         </p>
         <div className="mt-9 flex gap-4 justify-center">
           <a href="/my-requests" className="rounded-full border border-[#d8d2c6] px-7 py-2.5 text-sm font-medium hover:bg-white">
@@ -193,7 +193,7 @@ export default function RequestPage() {
       <div className="mb-10">
         <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">Request a proxy visit</h1>
         <p className="mt-3 text-[15px] leading-relaxed text-[#4a5563] max-w-prose">
-          A real person visiting the cemetery will go to the grave on your behalf, take respectful photos, and send you a personal reflection.
+          A faithful visitor will go to the grave on your behalf, stand on that sacred ground, offer prayer for the repose of the soul, and send you the record of their intercession.
         </p>
       </div>
 
@@ -201,11 +201,11 @@ export default function RequestPage() {
       <div className="mb-8 rounded-2xl border border-[#d8d2c6] bg-[#f9f7f2] p-6 text-sm text-[#3f4a3f]">
         <div className="font-medium tracking-tight mb-2">A few things that help</div>
         <ul className="space-y-1.5 text-[#4a5563]">
-          <li>• The more precise the grave location, the more meaningful the visit can be.</li>
-          <li>• Your personal message travels with the visitor — it is read at the grave.</li>
-          <li>• Reports are reviewed by a human before being sent, for quiet dignity.</li>
+          <li>• The more precise the grave location, the more meaningful the prayers offered there can be.</li>
+          <li>• Your personal message and prayers travel with the visitor — they will be spoken or held in the heart at the grave.</li>
+          <li>• Reports are reviewed by a human before being sent, to protect the sacred dignity of the act.</li>
         </ul>
-        <p className="mt-3 text-xs text-[#7a838e]">You will receive the visit report by email once it has been approved.</p>
+        <p className="mt-3 text-xs text-[#7a838e]">You will receive the record of the visit and the prayers by email once it has been approved.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-9">

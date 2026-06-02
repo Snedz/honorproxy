@@ -5,19 +5,19 @@ export default function HonorProxyHome() {
     <div className="min-h-screen bg-[#f8f6f1] font-sans">
 
       <main>
-        {/* Hero — more reverent and powerful */}
+        {/* Hero — more religious and spiritual */}
         <section className="mx-auto max-w-4xl px-6 pt-24 pb-20 text-center">
           <div className="inline-block rounded-full border border-[#d8d2c6] bg-white px-4 py-1 text-[10px] tracking-[3px] text-[#5c656f] mb-8">
-            A QUIET ACT OF REMEMBRANCE
+            A PRAYERFUL ACT OF REMEMBRANCE
           </div>
           
           <h1 className="text-6xl sm:text-7xl font-semibold tracking-[-2.5px] leading-[0.96] text-balance text-[#1c252f]">
-            Someone will stand<br />at their grave for you.
+            Someone will pray<br />at their grave for you.
           </h1>
           
           <p className="mt-7 max-w-md mx-auto text-[17px] leading-relaxed text-[#3f4852]">
-            When distance, health, or time keeps you away, a real person will go in your place —<br className="hidden sm:block" />
-            with respect, care, and the promise to remember.
+            When distance, age, or frailty keeps a family from the resting place of their beloved who served the Republic, a faithful stranger will go in their stead —<br className="hidden sm:block" />
+            to stand on holy ground, to offer prayer and remembrance before the Almighty, and to carry your love to the dead.
           </p>
 
           <div className="mt-11 flex flex-col sm:flex-row gap-4 justify-center">
@@ -50,23 +50,23 @@ export default function HonorProxyHome() {
             <div className="grid md:grid-cols-3 gap-x-8 gap-y-10 text-[15px]">
               <div className="space-y-3">
                 <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">01 — ASK</div>
-                <div className="font-medium text-lg tracking-tight text-[#1c252f]">You make a request</div>
-                <p className="text-[#4a5563] leading-relaxed">Tell us whose grave you wish someone would visit. Share the words or feeling you want carried to them.</p>
+                <div className="font-medium text-lg tracking-tight text-[#1c252f]">You entrust your prayer</div>
+                <p className="text-[#4a5563] leading-relaxed">You share whose grave you long for someone to visit in prayer. You send the words, the ache, or the blessing you wish carried to their soul.</p>
               </div>
               <div className="space-y-3">
-                <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">02 — STAND IN</div>
-                <div className="font-medium text-lg tracking-tight text-[#1c252f]">Someone goes for you</div>
-                <p className="text-[#4a5563] leading-relaxed">A visitor already heading to that cemetery claims the request and stands at the grave with quiet respect.</p>
+                <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">02 — STAND IN PRAYER</div>
+                <div className="font-medium text-lg tracking-tight text-[#1c252f]">A visitor goes for you</div>
+                <p className="text-[#4a5563] leading-relaxed">A faithful soul already going to that cemetery claims the request and stands at the grave on holy ground, offering prayer and remembrance in your name before God.</p>
               </div>
               <div className="space-y-3">
-                <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">03 — RECEIVE</div>
-                <div className="font-medium text-lg tracking-tight text-[#1c252f]">You are sent the memory</div>
-                <p className="text-[#4a5563] leading-relaxed">Fresh photos and a personal reflection arrive privately in your inbox — proof that someone was there for you.</p>
+                <div className="font-mono text-xs tracking-[2px] text-[#8a7754]">03 — RECEIVE THE RECORD</div>
+                <div className="font-medium text-lg tracking-tight text-[#1c252f]">You receive the intercession</div>
+                <p className="text-[#4a5563] leading-relaxed">Photographs and the prayer or words spoken at the grave arrive privately — a sacred witness that someone was there before the Lord on your behalf.</p>
               </div>
             </div>
 
             <p className="mt-8 text-center text-sm text-[#5c656f] max-w-prose mx-auto">
-              Many of these quiet acts are later shared in our public remembrances, so others may find comfort and inspiration.
+              Many of these acts of prayerful remembrance are later shared in our public remembrances, that others may be comforted and that the memory of the faithful departed may be kept alive.
             </p>
           </div>
         </section>
@@ -92,10 +92,10 @@ export default function HonorProxyHome() {
             </div>
             
             <p className="mt-9 text-xs tracking-widest text-[#7a838e]">
-              BUILT TO SCALE TO EVERY CEMETERY ON EARTH — AND ONE DAY, BEYOND.
+              BUILT TO SCALE TO EVERY CEMETERY WHERE THE FAITHFUL DEPARTED REST — AND ONE DAY, BEYOND.
             </p>
             <p className="mt-2 text-xs tracking-widest text-[#7a838e]">
-              The quiet visits that have taken place here are shared in our public remembrances.
+              The prayerful visits that have taken place here are shared in our public remembrances.
             </p>
           </div>
         </section>
@@ -109,7 +109,7 @@ export default function HonorProxyHome() {
             href="/remembrances" 
             className="text-sm text-[#5c656f] underline hover:text-[#1c252f] tracking-widest"
           >
-            Read recent remembrances
+            Read recent remembrances offered in prayer
           </a>
         </div>
       </main>

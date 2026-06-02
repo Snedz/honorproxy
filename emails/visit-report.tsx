@@ -31,7 +31,7 @@ export default function VisitReportEmail({
   keepsakeUrl,
   requesterName,
 }: VisitReportEmailProps) {
-  const previewText = `A visit was made for ${deceasedName} at ${cemeteryName}`;
+  const previewText = `A prayer was offered for ${deceasedName} at ${cemeteryName}`;
 
   return (
     <Html>
@@ -63,7 +63,7 @@ export default function VisitReportEmail({
                 color: '#1c252f',
                 margin: '0 0 14px'
               }}>
-                A visit was made for {deceasedName}
+                A prayer was offered for {deceasedName}
               </Text>
               <Text style={{ 
                 fontSize: '16px', 
@@ -71,7 +71,7 @@ export default function VisitReportEmail({
                 lineHeight: '1.55',
                 margin: 0
               }}>
-                Someone stood at their resting place today on your behalf, with care and quiet respect.
+                A faithful visitor stood at their resting place today on your behalf, offered prayer for the repose of their soul, and carried your remembrance before God.
               </Text>
             </Section>
 
@@ -128,7 +128,7 @@ export default function VisitReportEmail({
                   marginBottom: '8px', 
                   letterSpacing: '1.5px' 
                 }}>
-                  THE VISITOR WROTE
+                  THE VISITOR PRAYED AND WROTE
                 </div>
                 <Text style={{ 
                   fontSize: '16px', 
@@ -166,7 +166,7 @@ export default function VisitReportEmail({
                   marginTop: '10px',
                   letterSpacing: '0.5px'
                 }}>
-                  Photos, reflection, and a permanent record of the visit
+                  Photographs, the prayer offered at the grave, and a permanent record of the visit
                 </div>
               </Section>
             )}
@@ -221,9 +221,9 @@ export default function VisitReportEmail({
               color: '#4a5563',
               lineHeight: '1.6'
             }}>
-              This visit was made through HonorProxy — a small, private act of remembrance for those who cannot be there themselves.
+              This visit and these prayers were offered through HonorProxy — a small, private act of intercession and remembrance for those who cannot be there themselves.
               <br /><br />
-              We are grateful you are keeping their memory alive.
+              Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. We are grateful you are keeping their memory alive before God.
             </Section>
 
             <div style={{ textAlign: 'center', marginTop: '32px', fontSize: '10px', color: '#7a838e', letterSpacing: '1px' }}>
