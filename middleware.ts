@@ -6,9 +6,22 @@ export async function middleware(request: NextRequest) {
     request,
   })
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  // Guard: if env vars are not present at runtime (e.g. not set for Production
+  // or deployment not yet redeployed after adding them), do not crash the
+  // request. Public pages will still load; auth session refresh will be skipped
+  // until the variables are available. This matches the defensive pattern used
+  // in sitemap.ts and visit/keepsakes pages.
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('[middleware] Supabase environment variables missing at runtime. Skipping auth refresh for this request.')
+    return supabaseResponse
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
@@ -32,17 +45,22 @@ export async function middleware(request: NextRequest) {
   // IMPORTANT: Avoid writing any logic between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  // Optional: Protect certain routes later
-  // if (!user && request.nextUrl.pathname.startsWith('/account')) {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/login'
-  //   return NextResponse.redirect(url)
-  // }
+    // Optional: Protect certain routes later
+    // if (!user && request.nextUrl.pathname.startsWith('/account')) {
+    //   const url = request.nextUrl.clone()
+    //   url.pathname = '/login'
+    //   return NextResponse.redirect(url)
+    // }
+  } catch (err) {
+    // Do not let Supabase/auth errors (transient, bad key, edge network, etc.)
+    // take down the entire page. Log for debugging; continue serving the response.
+    console.warn('[middleware] Supabase auth.getUser() failed for this request (non-fatal):', err)
+  }
 
   return supabaseResponse
 }
