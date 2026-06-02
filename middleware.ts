@@ -50,6 +50,18 @@ export async function middleware(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser()
 
+    // Admin-only protection for the internal Pilot page (Snowden Zeng only)
+    const pathname = request.nextUrl.pathname
+    const ADMIN_EMAIL = 'snowdenzeng@gmail.com'
+    if (pathname === '/pilot' || pathname.startsWith('/pilot/')) {
+      const isAdmin = !!user && user.email?.toLowerCase() === ADMIN_EMAIL
+      if (!isAdmin) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/'
+        return NextResponse.redirect(url)
+      }
+    }
+
     // Optional: Protect certain routes later
     // if (!user && request.nextUrl.pathname.startsWith('/account')) {
     //   const url = request.nextUrl.clone()

@@ -90,7 +90,6 @@ export default function AboutPage() {
         <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
           <a href="/conduct" className="text-[#5c656f] hover:text-[#1c252f] underline">Visitor Code of Conduct</a>
           <a href="/privacy" className="text-[#5c656f] hover:text-[#1c252f] underline">Privacy</a>
-          <a href="/pilot" className="text-[#5c656f] hover:text-[#1c252f] underline">Running a Pilot</a>
           <a href="/vision" className="text-[#5c656f] hover:text-[#1c252f] underline">Long-Term Vision</a>
           <a href="/remembrances" className="text-[#5c656f] hover:text-[#1c252f] underline">Recent Remembrances</a>
           <a href="/request" className="text-[#5c656f] hover:text-[#1c252f] underline">Make a request</a>

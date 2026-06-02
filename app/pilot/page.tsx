@@ -1,10 +1,27 @@
-'use client'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-export default function PilotPage() {
+export default async function PilotPage() {
+  // Server-side auth check — only Snowden Zeng (snowdenzeng@gmail.com) can access.
+  // Combined with middleware protection for defense in depth.
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const ADMIN_EMAIL = 'snowdenzeng@gmail.com'
+  if (!user || user.email?.toLowerCase() !== ADMIN_EMAIL) {
+    redirect('/')
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
       <div className="mb-10">
         <a href="/" className="text-sm text-[#5c656f] hover:text-[#1c252f]">← Back to HonorProxy</a>
+      </div>
+
+      <div className="mb-4">
+        <div className="inline-block rounded-full border border-[#8c2f2f] bg-[#8c2f2f] px-3 py-0.5 text-[10px] tracking-[2px] text-white mb-3">
+          ADMIN ONLY
+        </div>
       </div>
 
       <div className="mb-12">

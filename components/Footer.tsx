@@ -9,8 +9,6 @@ export default function Footer() {
         <div className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[10px]">
           <a href="/about" className="underline hover:text-[#1c252f]">About</a>
           <span className="text-[#d8d2c6]">·</span>
-          <a href="/pilot" className="underline hover:text-[#1c252f]">Pilot</a>
-          <span className="text-[#d8d2c6]">·</span>
           <a href="/vision" className="underline hover:text-[#1c252f]">Vision</a>
           <span className="text-[#d8d2c6]">·</span>
           <a href="/remembrances" className="underline hover:text-[#1c252f]">Remembrances</a>

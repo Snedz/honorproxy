@@ -104,7 +104,6 @@ export default function VisionPage() {
         </p>
         <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
           <a href="/about" className="text-[#5c656f] hover:text-[#1c252f] underline">About HonorProxy</a>
-          <a href="/pilot" className="text-[#5c656f] hover:text-[#1c252f] underline">Running a Pilot</a>
           <a href="/conduct" className="text-[#5c656f] hover:text-[#1c252f] underline">Visitor Code of Conduct</a>
         </div>
       </div>

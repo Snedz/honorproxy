@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/api/',
           '/review/',
+          '/pilot/',
           '/login',
           '/signup',
           '/my-requests/',
