@@ -400,8 +400,8 @@ export default function VisitPage() {
       {/* Success state after submitting a report — calm, reverent keepsake moment */}
       {justCompletedVisitId && (
         <div className="mb-8 rounded-3xl border border-[#d4c9ad] bg-[#f0ede4] p-8 text-center">
-          <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#e9e4d9]">
-            <span className="text-2xl text-[#4a5c4f]">✓</span>
+          <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-[#8c2f2f] bg-[#f5f2eb]">
+            <span className="text-2xl text-[#8c2f2f]">✓</span>
           </div>
           <h2 className="text-3xl font-semibold tracking-tighter text-[#2f3a2f]">Thank you for standing in.</h2>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-[#3f4a3f]">

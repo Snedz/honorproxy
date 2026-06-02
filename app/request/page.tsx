@@ -165,8 +165,8 @@ export default function RequestPage() {
   if (success) {
     return (
       <div className="max-w-xl mx-auto px-6 py-20 text-center">
-        <div className="mx-auto h-12 w-12 rounded-full bg-[#e9e4d9] flex items-center justify-center mb-7">
-          <span className="text-[#4a5c4f] text-2xl">✓</span>
+        <div className="mx-auto h-12 w-12 rounded-full border border-[#8c2f2f] bg-[#f5f2eb] flex items-center justify-center mb-7">
+          <span className="text-[#8c2f2f] text-2xl">✓</span>
         </div>
         <h1 className="text-4xl font-semibold tracking-tighter text-[#1c252f]">Request received</h1>
         <p className="mt-5 text-[17px] leading-relaxed text-[#4a5563] max-w-prose mx-auto">
